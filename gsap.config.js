@@ -1,8 +1,7 @@
 import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-
-import { SplitText } from "gsap/SplitText";
+// import { Observer } from "gsap/Observer";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import { SplitText } from "gsap/SplitText";
 
-gsap.registerPlugin(useGSAP, SplitText, ScrollTrigger, ScrollSmoother);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother, SplitText);

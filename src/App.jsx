@@ -5,6 +5,7 @@ import "./styles/App.css";
 import WebsiteLoader from "./components/websiteLoader";
 import MainContent from "./components/MainContent";
 import HeroSection from "./components/HeroSection";
+import ScrollSmoother from "./components/animatedComponents/ScrollSmoother";
 
 // Store
 import useLoaderStore from "./store/useLoaderStore";
@@ -15,9 +16,10 @@ export default function App() {
   return (
     <>
       {loaderState && <WebsiteLoader />}
-      <HeroSection />
-
-      {!loaderState && <MainContent />}
+      <ScrollSmoother>
+        <HeroSection /> 
+        {!loaderState && <MainContent />}
+      </ScrollSmoother>
     </>
   );
 }
