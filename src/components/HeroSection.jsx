@@ -10,14 +10,14 @@ import useLoaderStore from "../store/useLoaderStore";
 
 export default function HeroSection() {
   const isMidAnimationTl = useLoaderStore((state) => state.isMidAnimationTl);
-  const fireNameRef = useRef(null);
+  const firstNameRef = useRef(null);
   const secondNameRef = useRef(null);
   const seeWorkButtonRef = useRef(null);
 
   // Intro Text Animation
   useGSAP(
     () => {
-      const fireNameChars = SplitText.create(fireNameRef.current, {
+      const fireNameChars = SplitText.create(firstNameRef.current, {
         type: "chars",
         mask: "chars",
       });
@@ -143,21 +143,21 @@ export default function HeroSection() {
   );
 
   return (
-    <div className="px-3 md:px-20 bg-charcoal font-main text-cream border-b border-gray-300/20 ">
+    <section className="px-3 md:px-20 bg-charcoal font-main text-cream border-b border-gray-300/20 ">
       <div className="py-9  min-h-screen flex flex-col justify-between">
         <div className="flex justify-between items-center w-full text-muted max-sm:text-sm">
           <span>{"{Frontend Developer}"}</span>
           <span className="max-md:hidden">{"{Creative Developer}"}</span>
           <span>{"{Alexandria, Egypt}"}</span>
         </div>
-        <div className="text-[clamp(3.8rem,15vw,14rem)] text-center leading-[1.2] tracking-wider">
-          <div ref={fireNameRef} className=" md:text-left max-sm:text-nowrap">
+        <h1 className="text-[clamp(3.8rem,15vw,14rem)] text-center leading-[1.2] tracking-wider">
+          <div ref={firstNameRef} className=" md:text-left max-sm:text-nowrap">
             Mohamed
           </div>
           <div ref={secondNameRef} className="md:text-right max-sm:text-nowrap">
             Magdy
           </div>
-        </div>
+        </h1>
         <div className="lg:flex justify-between relative items-center w-full">
           <p className="leading-[1.8] font-archivo text-xl font-bold md:w-100">
             I design & build interactive websites with a strong focus on detail
@@ -165,16 +165,16 @@ export default function HeroSection() {
             into digital experiences that feel as good as they look.
           </p>
           <span className="max-lg:hidden text-muted text-sm absolute right-1/2 translate-x-1/2 bottom-4">
-            SCROLL. GENTLY
+            ↓ SCROLL. GENTLY
           </span>
           <Link
             ref={seeWorkButtonRef}
             className="border inline-block max-lg:mt-8 border-gray-300/20 rounded-full py-4 px-10 text-sm"
           >
-            SEE THE WORK
+            SEE THE WORK →
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -31,6 +31,9 @@ export default function CustomCursor() {
 
       window.addEventListener("mousemove", handelMouseCursor);
       return () => {
+        gsap.set("body", {
+          cursor: "auto",
+        });
         window.removeEventListener("mousemove", handelMouseCursor);
       };
     });
@@ -39,11 +42,11 @@ export default function CustomCursor() {
     <>
       <div
         ref={cursorOutline}
-        className="w-10 h-10 fixed top-0 left-0 pointer-events-none -translate-1/2 rounded-full border border-gray-300/30 z-9"
+        className="w-10 h-10 fixed top-0 left-0 pointer-events-none -translate-1/2 rounded-full border border-gray-300/30 z-99"
       ></div>
       <div
         ref={cursorDot}
-        className="w-2 h-2 fixed top-0 left-0 pointer-events-none -translate-1/2 rounded-full bg-accent z-9"
+        className="w-2 h-2 fixed top-0 left-0 pointer-events-none -translate-1/2 rounded-full bg-accent z-99"
       ></div>
     </>
   );

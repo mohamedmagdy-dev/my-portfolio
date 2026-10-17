@@ -2,7 +2,7 @@
 import "./styles/App.css";
 
 // Components
-import WebsiteLoader from "./components/websiteLoader";
+import WebsiteLoader from "./components/WebsiteLoader";
 import MainContent from "./components/MainContent";
 import HeroSection from "./components/HeroSection";
 import ScrollSmoother from "./components/animatedComponents/ScrollSmoother";
