@@ -56,7 +56,7 @@ export default function HeroSection() {
       const handleEnter = (e) => {
         gsap.to(e.currentTarget, {
           fontVariationSettings: "'wght' 700, 'wdth' 120, 'slnt' 0",
-          duration: 0.3,
+          duration: 0.5,
           ease: "power2.out",
         });
       };
@@ -64,7 +64,7 @@ export default function HeroSection() {
       const handleLeave = (e) => {
         gsap.to(e.currentTarget, {
           fontVariationSettings: "'wght' 900, 'wdth' 60, 'slnt' 0",
-          duration: 0.3,
+          duration: 0.5,
           ease: "power2.out",
         });
       };
