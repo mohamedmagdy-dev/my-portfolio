@@ -6,7 +6,7 @@ import WebsiteLoader from "./components/websiteLoader";
 import MainContent from "./components/MainContent";
 import HeroSection from "./components/HeroSection";
 import ScrollSmoother from "./components/animatedComponents/ScrollSmoother";
-
+import CustomCursor from "./components/CustomCursor";
 // Store
 import useLoaderStore from "./store/useLoaderStore";
 
@@ -15,6 +15,7 @@ export default function App() {
 
   return (
     <>
+      <CustomCursor />
       {loaderState && <WebsiteLoader />}
       <ScrollSmoother>
         <HeroSection /> 
