@@ -20,6 +20,7 @@ export default function HeroSection() {
       const fireNameChars = SplitText.create(fireNameRef.current, {
         type: "chars",
         mask: "chars",
+        autoSplit: true,
       });
       const secondNameChars = SplitText.create(secondNameRef.current, {
         type: "chars",
@@ -123,21 +124,26 @@ export default function HeroSection() {
   );
 
   return (
-    <div className="px-20 bg-charcoal font-main text-white border-b border-gray-300/20 ">
-      <div className=" py-7  min-h-screen flex flex-col justify-between">
-        <div className="flex justify-between items-center w-full text-muted">
+    <div className="px-3 md:px-20 bg-charcoal font-main text-white border-b border-gray-300/20 ">
+      <div className="py-9  min-h-screen flex flex-col justify-between">
+        <div className="flex justify-between items-center w-full text-muted max-sm:text-sm">
           <span>{"{Frontend Developer}"}</span>
           <span className="max-md:hidden">{"{Creative Developer}"}</span>
           <span>{"{Alexandria, Egypt}"}</span>
         </div>
-        <div className="text-[200px] tracking-wider">
-          <div ref={fireNameRef}>Mohamed</div>
-          <div ref={secondNameRef} className="text-right">
+        <div className="text-[clamp(3.8rem,14vw,14rem)] text-center leading-[1.2] tracking-wider">
+          <div ref={fireNameRef} className=" md:text-left max-sm:text-nowrap">
+            Mohamed
+          </div>
+          <div
+            ref={secondNameRef}
+            className=" md:text-right max-sm:text-nowrap"
+          >
             Magdy
           </div>
         </div>
         <div className="lg:flex justify-between relative items-center w-full">
-          <p className="text-lg font-bold md:w-100">
+          <p className="text- lg:text-lg font-bold md:w-100">
             I design & build interactive websites with a strong focus on detail
             From smooth animations to pixel-perfect interfaces, I turn ideas
             into digital experiences that feel as good as they look.
@@ -147,7 +153,7 @@ export default function HeroSection() {
           </span>
           <Link
             ref={seeWorkButtonRef}
-            className="border inline-block max-lg:mt-4 border-gray-300/20 rounded-full py-4 px-10 text-sm"
+            className="border inline-block max-lg:mt-8 border-gray-300/20 rounded-full py-4 px-10 text-sm"
           >
             SEE THE WORK
           </Link>

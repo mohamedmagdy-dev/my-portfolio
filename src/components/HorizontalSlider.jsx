@@ -11,7 +11,7 @@ export default function HorizontalSlider() {
       const loop = horizontalLoop(titles, {
         paused: false,
         repeat: -1,
-        speed: 0.5,
+        speed: 0.7,
       });
       function horizontalLoop(items, config) {
         items = gsap.utils.toArray(items);
