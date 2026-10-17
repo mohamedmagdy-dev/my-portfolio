@@ -2,9 +2,11 @@
 
 @theme {
   --font-main: "Google Sans Flex", sans-serif;
+  --font-archivo: "Archivo", sans-serif;
   --color-charcoal: #161818;
   --color-muted: #8f8a82;
-  --color-accent: #81A9FE;
+  --color-accent: #81a9fe;
+  --color-cream: #ECE9E3;
   /* --breakpoint-sm: 640px;
   --breakpoint-md: 840px;
   --breakpoint-lg: 1600px;

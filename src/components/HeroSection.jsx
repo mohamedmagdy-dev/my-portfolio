@@ -20,14 +20,16 @@ export default function HeroSection() {
       const fireNameChars = SplitText.create(fireNameRef.current, {
         type: "chars",
         mask: "chars",
-        autoSplit: true,
       });
+
       const secondNameChars = SplitText.create(secondNameRef.current, {
         type: "chars",
         mask: "chars",
       });
+
       gsap.set([fireNameChars.chars, secondNameChars.chars], {
         opacity: 0,
+        fontVariationSettings: "'wght' 900,'wdth' 60,'slnt' 0",
       });
 
       if (isMidAnimationTl) {
@@ -49,18 +51,35 @@ export default function HeroSection() {
         );
       }
 
-      fireNameChars.chars.forEach((el) => {
-        el.addEventListener("mousemove", () => {
-          gsap.to(el, {
-            fontVariationSettings: "'wght' 900, 'wdth' 200",
-          });
+      const allChars = [...fireNameChars.chars, ...secondNameChars.chars];
+
+      const handleEnter = (e) => {
+        gsap.to(e.currentTarget, {
+          fontVariationSettings: "'wght' 700, 'wdth' 120, 'slnt' 0",
+          duration: 0.3,
+          ease: "power2.out",
         });
-        el.addEventListener("mouseleave", () => {
-          gsap.to(el, {
-            fontVariationSettings: "'wght' 100, 'wdth' 400",
-          });
+      };
+
+      const handleLeave = (e) => {
+        gsap.to(e.currentTarget, {
+          fontVariationSettings: "'wght' 900, 'wdth' 60, 'slnt' 0",
+          duration: 0.3,
+          ease: "power2.out",
         });
+      };
+
+      allChars.forEach((el) => {
+        el.addEventListener("mouseenter", handleEnter);
+        el.addEventListener("mouseleave", handleLeave);
       });
+
+      return () => {
+        allChars.forEach((el) => {
+          el.removeEventListener("mouseenter", handleEnter);
+          el.removeEventListener("mouseleave", handleLeave);
+        });
+      };
     },
     {
       dependencies: [isMidAnimationTl],
@@ -124,26 +143,23 @@ export default function HeroSection() {
   );
 
   return (
-    <div className="px-3 md:px-20 bg-charcoal font-main text-white border-b border-gray-300/20 ">
+    <div className="px-3 md:px-20 bg-charcoal font-main text-cream border-b border-gray-300/20 ">
       <div className="py-9  min-h-screen flex flex-col justify-between">
         <div className="flex justify-between items-center w-full text-muted max-sm:text-sm">
           <span>{"{Frontend Developer}"}</span>
           <span className="max-md:hidden">{"{Creative Developer}"}</span>
           <span>{"{Alexandria, Egypt}"}</span>
         </div>
-        <div className="text-[clamp(3.8rem,14vw,14rem)] text-center leading-[1.2] tracking-wider">
+        <div className="text-[clamp(3.8rem,15vw,14rem)] text-center leading-[1.2] tracking-wider">
           <div ref={fireNameRef} className=" md:text-left max-sm:text-nowrap">
             Mohamed
           </div>
-          <div
-            ref={secondNameRef}
-            className=" md:text-right max-sm:text-nowrap"
-          >
+          <div ref={secondNameRef} className="md:text-right max-sm:text-nowrap">
             Magdy
           </div>
         </div>
         <div className="lg:flex justify-between relative items-center w-full">
-          <p className="text- lg:text-lg font-bold md:w-100">
+          <p className="leading-[1.8] font-archivo text-xl font-bold md:w-100">
             I design & build interactive websites with a strong focus on detail
             From smooth animations to pixel-perfect interfaces, I turn ideas
             into digital experiences that feel as good as they look.
