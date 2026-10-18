@@ -13,8 +13,8 @@ export default function WebsiteLoader() {
   );
 
   let rowCards = useRef(null);
-  let revelBox = useRef(null);
-  let revelBoxParent = useRef(null);
+  let revealBox = useRef(null);
+  let revealBoxParent = useRef(null);
 
   useGSAP(() => {
     const windowHeight = window.innerHeight;
@@ -29,28 +29,28 @@ export default function WebsiteLoader() {
       ease: "power4.inOut",
     });
 
-    gsap.set(revelBox.current, {
+    gsap.set(revealBox.current, {
       opacity: 1,
     });
 
-    tl.from(revelBox.current, {
+    tl.from(revealBox.current, {
       duration: 2,
       delay: 0.5,
       ease: "expo.out",
       rotate: "45deg",
-      y: windowHeight - revelBox.current.offsetHeight / 2,
+      y: windowHeight - revealBox.current.offsetHeight / 2,
       onComplete: () => {
         updateAnimationState(true);
       },
     });
-    tl.to(revelBox.current, {
+    tl.to(revealBox.current, {
       width: "100%",
       height: "100%",
       ease: "power4.inOut",
       borderRadius: 0,
       duration: 1.2,
     });
-    tl.to(revelBoxParent.current, {
+    tl.to(revealBoxParent.current, {
       background: "var(--color-charcoal)",
     });
   }, []);
@@ -67,11 +67,11 @@ export default function WebsiteLoader() {
         <div className="w-screen flex-1 bg-charcoal"></div>
       </div>
       <div
-        ref={revelBoxParent}
+        ref={revealBoxParent}
         className="mix-blend-lighten absolute z-8 size-full inset-0 bg-white overflow-hidden"
       >
         <div
-          ref={revelBox}
+          ref={revealBox}
           className="bg-charcoal w-50 h-70 lg:w-100 rounded-xl opacity-0 absolute -translate-1/2 left-1/2 top-1/2"
         ></div>
       </div>
