@@ -1,9 +1,16 @@
+// lib
 import { useGSAP } from "@gsap/react";
 import { ScrollSmoother as sm } from "gsap/ScrollSmoother";
 
+// store
+import useScrollStore from "../../store/useScrollStore";
 export default function ScrollSmoother({ children }) {
+  const setScrollHandler = useScrollStore(
+    (state) => state.setScrollHandler,
+  );
   useGSAP(() => {
-    sm.create({});
+    const scrollSmoother = sm.create({});
+    setScrollHandler(scrollSmoother);
   });
   return (
     <div id="smooth-wrapper">

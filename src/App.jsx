@@ -7,6 +7,8 @@ import MainContent from "./components/MainContent";
 import HeroSection from "./components/HeroSection";
 import ScrollSmoother from "./components/animatedComponents/ScrollSmoother";
 import CustomCursor from "./components/CustomCursor";
+import Header from "./components/Header";
+
 // Store
 import useLoaderStore from "./store/useLoaderStore";
 
@@ -16,9 +18,10 @@ export default function App() {
   return (
     <>
       <CustomCursor />
+      <Header />
       {loaderState && <WebsiteLoader />}
       <ScrollSmoother>
-        <HeroSection /> 
+        <HeroSection />
         {!loaderState && <MainContent />}
       </ScrollSmoother>
     </>

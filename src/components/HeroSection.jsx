@@ -17,7 +17,7 @@ export default function HeroSection() {
   // Intro Text Animation
   useGSAP(
     () => {
-      const fireNameChars = SplitText.create(firstNameRef.current, {
+      const firstNameChars = SplitText.create(firstNameRef.current, {
         type: "chars",
         mask: "chars",
       });
@@ -27,20 +27,20 @@ export default function HeroSection() {
         mask: "chars",
       });
 
-      gsap.set([fireNameChars.chars, secondNameChars.chars], {
+      gsap.set([firstNameChars.chars, secondNameChars.chars], {
         opacity: 0,
         fontVariationSettings: "'wght' 900,'wdth' 60,'slnt' 0",
       });
 
       if (isMidAnimationTl) {
         const tl = gsap.timeline();
-        tl.to([fireNameChars.chars, secondNameChars.chars], {
+        tl.to([firstNameChars.chars, secondNameChars.chars], {
           opacity: 1,
           delay: 0.3,
           ease: "power4.out",
         });
         tl.from(
-          [fireNameChars.chars, secondNameChars.chars],
+          [firstNameChars.chars, secondNameChars.chars],
           {
             y: 400,
             stagger: 0.05,
@@ -51,7 +51,7 @@ export default function HeroSection() {
         );
       }
 
-      const allChars = [...fireNameChars.chars, ...secondNameChars.chars];
+      const allChars = [...firstNameChars.chars, ...secondNameChars.chars];
 
       const handleEnter = (e) => {
         gsap.to(e.currentTarget, {
@@ -143,8 +143,8 @@ export default function HeroSection() {
   );
 
   return (
-    <section className="px-3 md:px-20 bg-charcoal font-main text-cream border-b border-gray-300/20 ">
-      <div className="py-9  min-h-screen flex flex-col justify-between">
+    <section className="px-3 lg:px-20 pt-24 bg-charcoal font-main text-cream border-b border-gray-300/20 ">
+      <div className="py-9 min-h-[calc(100vh-100px)] flex flex-col justify-between">
         <div className="flex justify-between items-center w-full text-muted max-sm:text-sm">
           <span>{"{Frontend Developer}"}</span>
           <span className="max-md:hidden">{"{Creative Developer}"}</span>
@@ -159,7 +159,7 @@ export default function HeroSection() {
           </div>
         </h1>
         <div className="lg:flex justify-between relative items-center w-full">
-          <p className="leading-[1.8] font-archivo text-xl font-bold md:w-100">
+          <p className=" font-archivo text-xl font-bold md:w-100">
             I design & build interactive websites with a strong focus on detail
             From smooth animations to pixel-perfect interfaces, I turn ideas
             into digital experiences that feel as good as they look.
