@@ -80,10 +80,7 @@ export default function Header() {
   };
 
   return (
-    <header
-      ref={headerRef}
-      className={clsx("fixed z-20 w-full -translate-y-full")}
-    >
+    <header ref={headerRef} className={"fixed z-20 w-full -translate-y-full "}>
       <div className=" px-3 lg:px-20 py-5 flex gap-2 justify-between items-center ">
         <div>
           <img src={logo} className="w-60 " alt="Website logo" />
@@ -91,7 +88,7 @@ export default function Header() {
 
         <button
           onClick={handleToggleMenu}
-          className="text-sm cursor-pointer lg:hidden flex items-center gap-2 text-cream border border-gray-300/20 font-archivo py-2 px-3 rounded-full"
+          className="text-sm cursor-pointer lg:hidden flex items-center gap-2 text-cream border border-gray-300/20  py-2 px-3 rounded-full"
         >
           {!isMenuOpen && (
             <div className="flex flex-col gap-1 justify-center">
@@ -111,7 +108,7 @@ export default function Header() {
           {isMenuOpen ? "CLOSE" : "MENU"}
         </button>
         {/* Wide Screen Navigation */}
-        <ul className="hidden lg:flex gap-4 text-cream font-archivo ">
+        <ul className="hidden lg:flex gap-4 text-cream  ">
           {links.map((el, index) => {
             return (
               <NavLink to={`/${el === "home" ? "" : el}`} key={index}>
@@ -133,7 +130,7 @@ export default function Header() {
         </ul>
 
         {/* Small Screen Navigation */}
-        <ul className="overflow-hidden small-screen-navigation -translate-y-25 flex flex-col lg:hidden absolute -z-10 top-full left-0 px-3 lg:px-20 w-full  h-0   font-archivo text-cream bg-charcoal">
+        <ul className="overflow-hidden small-screen-navigation -translate-y-25 flex flex-col lg:hidden absolute -z-10 top-full left-0 px-3 lg:px-20 w-full  h-0    text-cream bg-charcoal">
           {links.map((el, index) => {
             return (
               <NavLink to={`/${el === "home" ? "" : el}`} key={index}>

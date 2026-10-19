@@ -159,7 +159,7 @@ export default function HeroSection() {
           </div>
         </h1>
         <div className="lg:flex justify-between relative items-center w-full">
-          <p className=" font-archivo text-xl font-bold md:w-100">
+          <p className="  text-xl font-bold md:w-100">
             I design & build interactive websites with a strong focus on detail
             From smooth animations to pixel-perfect interfaces, I turn ideas
             into digital experiences that feel as good as they look.
