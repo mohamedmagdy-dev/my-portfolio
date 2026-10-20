@@ -111,7 +111,7 @@ export default function SelectedWork() {
   };
 
   return (
-    <section className=" py-25 lg:py-50 px-3 lg:px-20 ">
+    <section className=" pt-25 lg:pt-50 px-3 lg:px-20">
       <h2 className="mb-10 text-muted font-main text-sm uppercase">
         Selected work (0{selectedWork.length})
       </h2>
