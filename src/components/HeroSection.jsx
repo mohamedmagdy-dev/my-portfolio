@@ -48,6 +48,13 @@ export default function HeroSection() {
             duration: 1,
           },
           "<",
+          tl.to(
+            [".hero-dec", ".hero-scroll-indicator", seeWorkButtonRef.current],
+            {
+              opacity: 1,
+              stagger: 0.3,
+            },
+          ),
         );
       }
 
@@ -159,17 +166,17 @@ export default function HeroSection() {
           </div>
         </h1>
         <div className="lg:flex justify-between relative items-center w-full">
-          <p className="  text-xl font-bold md:w-100">
+          <p className="hero-dec  text-xl font-bold md:w-100 opacity-0">
             I design & build interactive websites with a strong focus on detail
             From smooth animations to pixel-perfect interfaces, I turn ideas
             into digital experiences that feel as good as they look.
           </p>
-          <span className="max-lg:hidden text-muted text-sm absolute right-1/2 translate-x-1/2 bottom-4">
+          <span className="opacity-0 hero-scroll-indicator max-lg:hidden text-muted text-sm absolute right-1/2 translate-x-1/2 bottom-4">
             ↓ SCROLL. GENTLY
           </span>
           <Link
             ref={seeWorkButtonRef}
-            className="border inline-block max-lg:mt-8 border-gray-300/20 rounded-full py-4 px-10 text-sm"
+            className="opacity-0 border inline-block max-lg:mt-8 border-gray-300/20 rounded-full py-4 px-10 text-sm"
           >
             SEE THE WORK →
           </Link>
