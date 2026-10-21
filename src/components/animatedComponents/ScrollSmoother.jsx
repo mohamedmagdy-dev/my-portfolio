@@ -5,11 +5,12 @@ import { ScrollSmoother as sm } from "gsap/ScrollSmoother";
 // store
 import useScrollStore from "../../store/useScrollStore";
 export default function ScrollSmoother({ children }) {
-  const setScrollHandler = useScrollStore(
-    (state) => state.setScrollHandler,
-  );
+  const setScrollHandler = useScrollStore((state) => state.setScrollHandler);
   useGSAP(() => {
-    const scrollSmoother = sm.create({});
+    const scrollSmoother = sm.create({
+      ignoreMobileResize: true,
+      normalizeScroll: true,
+    });
     setScrollHandler(scrollSmoother);
   });
   return (

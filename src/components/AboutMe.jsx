@@ -2,7 +2,6 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 
 export default function AboutMe() {
@@ -13,8 +12,6 @@ export default function AboutMe() {
       const splitDesc = SplitText.create("p", {
         type: "words",
       });
-
-      console.log(splitDesc.words);
       gsap.set(splitDesc.words, {
         opacity: 0.2,
       });
@@ -26,9 +23,7 @@ export default function AboutMe() {
           trigger: aboutMeRef.current,
           pin: true,
           start: "top top",
-          end: "",
           scrub: 1,
-          markers: true,
         },
       });
     },

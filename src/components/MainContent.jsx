@@ -3,6 +3,7 @@ import HorizontalSlider from "./HorizontalSlider";
 import SelectedWork from "./SelectedWork";
 import HorizontalWorkSlider from "./HorizontalWorkSlider";
 import AboutMe from "./AboutMe";
+import VideoRevel from "./VideoRevel";
 
 export default function MainContent() {
   return (
@@ -11,6 +12,7 @@ export default function MainContent() {
       <SelectedWork />
       <HorizontalWorkSlider />
       <AboutMe />
+      <VideoRevel />
     </section>
   );
 }
