@@ -6,11 +6,11 @@ import { NavLink } from "react-router";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { Observer } from "gsap/Observer";
 
 // store
 import useLoaderStore from "../store/useLoaderStore";
 import useScrollStore from "../store/useScrollStore";
-import clsx from "clsx";
 
 // constants
 const links = ["home", "work", "about", "contact"];
@@ -75,12 +75,38 @@ export default function Header() {
     }
   }, [isLoaderLoading]);
 
+  // Close and open header while scroll animation
+  useGSAP(() => {
+    if (!isLoaderLoading) {
+      Observer.create({
+        type: "wheel,touch",
+        onUp: () => {
+          gsap.to(headerRef.current, {
+            yPercent: 100,
+            ease: "power3.out",
+            duration: 1,
+          });
+        },
+        onDown: () => {
+          gsap.to(headerRef.current, {
+            yPercent: 0,
+            ease: "power3.out",
+            duration: 1,
+          });
+        },
+      });
+    }
+  }, [isLoaderLoading]);
+
   const handleToggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
   return (
-    <header ref={headerRef} className={"fixed z-20 w-full -translate-y-full bg-linear-to-b from-charcoal to-transparent"}>
+    <header
+      ref={headerRef}
+      className={"fixed z-20 w-full -translate-y-full bg-linear-to-b"}
+    >
       <div className=" px-3 lg:px-20 py-5 flex gap-2 justify-between items-center ">
         <div>
           <img src={logo} className="w-60 " alt="Website logo" />
