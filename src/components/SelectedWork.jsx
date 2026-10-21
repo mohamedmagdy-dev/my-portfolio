@@ -1,5 +1,5 @@
 // lib
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -43,8 +43,6 @@ const selectedWork = [
 ];
 
 export default function SelectedWork() {
-  const [activeWorkCard, setActiveWorkCard] = useState(1);
-  const workImgPreview = useRef(null);
   const workContainer = useRef(null);
   let firstEnter;
 
@@ -69,12 +67,12 @@ export default function SelectedWork() {
 
         const align = (e) => {
           if (firstEnter) {
-            xSetter(e.clientX, e.clientX);
-            ySetter(e.clientY, e.clientY);
+            xSetter(e.offsetX, e.offsetX);
+            ySetter(e.offsetY, e.offsetY);
             firstEnter = false;
           } else {
-            xSetter(e.clientX);
-            ySetter(e.clientY);
+            xSetter(e.offsetX);
+            ySetter(e.offsetY);
           }
         };
 
@@ -106,10 +104,6 @@ export default function SelectedWork() {
     },
   );
 
-  const handleChangeActiveCard = (id) => {
-    setActiveWorkCard(id);
-  };
-
   return (
     <section className=" pt-25 lg:pt-50 px-3 lg:px-20">
       <h2 className="mb-10 text-muted font-main text-sm uppercase">
@@ -120,21 +114,14 @@ export default function SelectedWork() {
         <div className=" border-y border-gray-300/20 flex-1">
           {selectedWork.map((work) => {
             return (
-              <a
-                key={work.id}
-                href={work.projectLink}
-                target="_blank"
-                onMouseEnter={() => {
-                  handleChangeActiveCard(work.id);
-                }}
-              >
+              <a key={work.id} href={work.projectLink} target="_blank">
                 <div className="relative project-container group border-b border-gray-300/20 py-5 lg:py-15 flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="group-hover:lg:ml-10 duration-300 flex items-center gap-10">
                     <span className="text-accent font-main text-sm">
                       0{work.id}
                     </span>
                     <div>
-                      <h3 className="transition-[font-variation-settings] [font-variation-settings:'wdth'_100] group-hover:lg:[font-variation-settings:'wdth'_105]  group-hover:text-accent  duration-500 font-main mb-2 capitalize text-[clamp(3rem,10vw,5rem)] text-cream">
+                      <h3 className="transition-[font-variation-settings] [font-variation-settings:'wdth'_100] group-hover:lg:[font-variation-settings:'wdth'_105]  group-hover:text-accent  duration-500 font-main mb-2 capitalize text-[clamp(2rem,10vw,5rem)] text-cream">
                         {work.title}
                       </h3>
                       <p className="uppercase text-sm text-muted ">
@@ -145,7 +132,7 @@ export default function SelectedWork() {
                   <span className="max-md:block max-md:text-center self-end max-md:mt-10 text-cream text-sm mr-3 lg:opacity-0 lg:group-hover:opacity-100 group-hover:mr-0 duration-300">
                     VIEW PROJECT↝
                   </span>
-                  <div className="img-preview opacity-0 hidden  lg:block fixed top-0 left-0 -translate-1/2 pointer-events-none z-50 overflow-hidden rounded-xl w-150 h-75">
+                  <div className="img-preview opacity-0 hidden  lg:block absolute top-0 left-0 -translate-1/2 pointer-events-none z-50 overflow-hidden rounded-xl w-150 h-75">
                     <img
                       className="w-full h-full object-contain rounded-xl"
                       src={work.image}

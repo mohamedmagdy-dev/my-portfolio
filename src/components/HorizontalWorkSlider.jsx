@@ -129,7 +129,7 @@ export default function HorizontalWorkSlider() {
   return (
     <section
       ref={HorizontalWorkSliderRef}
-      className="py-25 lg:py-50 bg-charcoal "
+      className="py-25 lg:py-50 "
     >
       <div className="flex items-center gap-4 justify-between mb-10 text-muted text-sm uppercase px-3 lg:px-20 ">
         <span>(mobile eye)</span>
