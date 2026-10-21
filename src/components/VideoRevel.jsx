@@ -1,5 +1,5 @@
 // Videos
-import video from "../assets/videos/VideoRevel.mp4";
+import video from "../assets/videos/videoRevel.mp4";
 
 // Lib
 import gsap from "gsap";
