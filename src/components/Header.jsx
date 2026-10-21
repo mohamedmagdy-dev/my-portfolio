@@ -80,7 +80,7 @@ export default function Header() {
   };
 
   return (
-    <header ref={headerRef} className={"fixed z-20 w-full -translate-y-full "}>
+    <header ref={headerRef} className={"fixed z-20 w-full -translate-y-full bg-linear-to-b from-charcoal to-transparent"}>
       <div className=" px-3 lg:px-20 py-5 flex gap-2 justify-between items-center ">
         <div>
           <img src={logo} className="w-60 " alt="Website logo" />

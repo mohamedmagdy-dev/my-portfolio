@@ -7,7 +7,7 @@ export default function CustomCursor() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add("(min-width: 767px)", () => {
-      gsap.set(["body", "a", "button"], {
+      gsap.set(["body", "a", "button","Link"], {
         cursor: "none",
       });
       const xSetter = gsap.quickSetter(cursorDot.current, "x", "px");
@@ -31,7 +31,7 @@ export default function CustomCursor() {
 
       window.addEventListener("mousemove", handleMouseCursor);
       return () => {
-        gsap.set(["body", "a", "button"], {
+        gsap.set(["body", "a", "button", "Link"], {
           cursor: "auto",
         });
         window.removeEventListener("mousemove", handleMouseCursor);
