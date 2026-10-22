@@ -4,15 +4,17 @@ import SelectedWork from "./SelectedWork";
 import HorizontalWorkSlider from "./HorizontalWorkSlider";
 import AboutMe from "./AboutMe";
 import VideoRevel from "./VideoRevel";
+import TextMarquee from "./TextMarquee";
 
 export default function MainContent() {
   return (
     <section className="bg-charcoal  ">
-      <HorizontalSlider />
+      {/* <HorizontalSlider />
       <SelectedWork />
       <HorizontalWorkSlider />
       <AboutMe />
-      <VideoRevel />
+      <VideoRevel /> */}
+      <TextMarquee />
     </section>
   );
 }
