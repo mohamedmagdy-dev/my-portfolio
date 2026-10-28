@@ -24,7 +24,9 @@ export default function TextMarquee() {
           invalidateOnRefresh: true,
           onLeave: () => {
             gsap.to(section.current, {
-              padding: "30px",
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              paddingBottom: "30px",
               ease: "none",
               overwrite: "auto",
             });

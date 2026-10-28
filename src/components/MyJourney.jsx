@@ -37,10 +37,15 @@ export default function MyJourney() {
         type: "chars",
       });
 
-      tl.from(splitHeadText.chars, {
+      gsap.set(splitHeadText.chars, {
         y: "random(-180,180)px",
-        stagger: 0.001,
       });
+
+          tl.to(splitHeadText.chars, {
+            y: 0,
+            stagger: 0.001,
+          });
+
 
       tl.to(headText.current, {
         scale: 0.1,
@@ -72,7 +77,9 @@ export default function MyJourney() {
           tl.to(
             sectionRef.current,
             {
-              padding: "30px",
+              paddingLeft: "30px",
+              paddingRight: "30px",
+              paddingBottom: "30px",
             },
             "<",
           );
@@ -110,7 +117,7 @@ export default function MyJourney() {
         {steps.map((step, index) => (
           <span
             key={index}
-            className="journey-step absolute -bottom-full translate-y-1/2 text-cream text-[clamp(3rem,9vw,14rem)]"
+            className="journey-step absolute -bottom-full translate-y-1/2 text-cream text-[clamp(2rem,9vw,14rem)] text-nowrap"
           >
             {step}
           </span>
