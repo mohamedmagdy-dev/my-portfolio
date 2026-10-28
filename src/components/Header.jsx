@@ -2,7 +2,7 @@
 import logo from "../assets/images/logo.webp";
 
 // lib
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -108,9 +108,9 @@ export default function Header() {
       className={"fixed z-20 w-full -translate-y-full bg-linear-to-b"}
     >
       <div className=" px-3 lg:px-20 py-5 flex gap-2 justify-between items-center ">
-        <div>
+        <Link to={"/"}>
           <img src={logo} className="w-60 " alt="Website logo" />
-        </div>
+        </Link>
 
         <button
           onClick={handleToggleMenu}
@@ -159,7 +159,11 @@ export default function Header() {
         <ul className="overflow-hidden small-screen-navigation -translate-y-25 flex flex-col lg:hidden absolute -z-10 top-full left-0 px-3 lg:px-20 w-full  h-0    text-cream bg-charcoal">
           {links.map((el, index) => {
             return (
-              <NavLink onClick={() => setIsMenuOpen(false)} to={`/${el === "home" ? "" : el}`} key={index}>
+              <NavLink
+                onClick={() => setIsMenuOpen(false)}
+                to={`/${el === "home" ? "" : el}`}
+                key={index}
+              >
                 {({ isActive }) => {
                   return (
                     <li

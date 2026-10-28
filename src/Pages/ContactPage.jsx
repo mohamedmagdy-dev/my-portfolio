@@ -98,8 +98,8 @@ export default function ContactPage() {
             (Frontend & Engineering Services)
           </p>
           <p className="text-base font-medium text-cream leading-relaxed">
-            Modern React & Next.js Architecture · High-Performance Web Apps ·
-            Fluid GSAP Micro-Interactions · Responsive & Pixel-Perfect UI/UX
+            Modern React  Architecture · High-Performance Web Apps ·
+             Responsive & Pixel-Perfect UI/UX
             Implementation · Clean & Scalable Codebase
           </p>
         </div>
