@@ -12,6 +12,7 @@ const PATH_D =
 const TEXT_CREAM = "If our visions align, ";
 const TEXT_GRAD = "let’s shape what’s next";
 const TOTAL_CHARS = TEXT_CREAM.length + TEXT_GRAD.length;
+const VERTICAL_OFFSET = 120; // Pushes the scrolling text down from the top edge
 
 export default function WhatIsNext() {
   const sectionRef = useRef(null);
@@ -78,7 +79,10 @@ export default function WhatIsNext() {
       };
       updateDimensions();
 
-      const cam = { x: startPt.x - centerSvg.x, y: startPt.y - SVG_H / 2 - 30 };
+      const cam = {
+        x: startPt.x - centerSvg.x,
+        y: startPt.y - SVG_H / 2 - VERTICAL_OFFSET,
+      };
       const setCamX = gsap.quickTo(cam, "x", {
         duration: 0.35,
         ease: "power2.out",
@@ -154,7 +158,7 @@ export default function WhatIsNext() {
           }
 
           setCamX(textX - centerSvg.x);
-          setCamY(textY - SVG_H / 2 - 30);
+          setCamY(textY - SVG_H / 2 - VERTICAL_OFFSET);
 
           const footerPhase = gsap.utils.clamp(0, 1, (p - 0.68) / 0.32);
           const dropProgress = gsap.utils.clamp(0, 1, footerPhase / 0.45);

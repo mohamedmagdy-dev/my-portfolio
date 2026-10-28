@@ -2,11 +2,11 @@
 import logo from "../assets/images/logo.webp";
 
 // lib
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { Observer } from "gsap/Observer";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // store
 import useLoaderStore from "../store/useLoaderStore";
@@ -19,6 +19,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef(null);
   const menuTl = useRef(null);
+  const location = useLocation();
 
   const isLoaderLoading = useLoaderStore((state) => state.isLoading);
   const scrollHandler = useScrollStore((state) => state.scrollHandler);
@@ -64,39 +65,56 @@ export default function Header() {
     }
   }, [isMenuOpen]);
 
-  // Header Animation
+  // Header scroll & visibility animation
   useGSAP(() => {
-    if (!isLoaderLoading) {
+    if (isLoaderLoading) return;
+
+    const showHeader = () => {
       gsap.to(headerRef.current, {
         yPercent: 100,
-        ease: "expo",
-        duration: 1,
+        ease: "power3.out",
+        duration: 0.5,
+        overwrite: "auto",
       });
-    }
-  }, [isLoaderLoading]);
+    };
 
-  // Close and open header while scroll animation
-  useGSAP(() => {
-    if (!isLoaderLoading) {
-      Observer.create({
-        type: "wheel,touch",
-        onUp: () => {
-          gsap.to(headerRef.current, {
-            yPercent: 100,
-            ease: "power3.out",
-            duration: 1,
-          });
-        },
-        onDown: () => {
-          gsap.to(headerRef.current, {
-            yPercent: 0,
-            ease: "power3.out",
-            duration: 1,
-          });
-        },
+    const hideHeader = () => {
+      gsap.to(headerRef.current, {
+        yPercent: 0,
+        ease: "power3.out",
+        duration: 0.5,
+        overwrite: "auto",
       });
-    }
-  }, [isLoaderLoading]);
+    };
+
+    // Make sure header is visible on initial load and route changes
+    showHeader();
+
+    const trigger = ScrollTrigger.create({
+      start: 0,
+      end: "max",
+      onUpdate: (self) => {
+        // 1. Always show header when at the very top of the page
+        if (self.scroll() <= 60) {
+          showHeader();
+          return;
+        }
+
+        // 2. Scrolling down -> hide header
+        if (self.direction === 1) {
+          hideHeader();
+        }
+        // 3. Scrolling up -> show header
+        else if (self.direction === -1) {
+          showHeader();
+        }
+      },
+    });
+
+    return () => {
+      trigger.kill();
+    };
+  }, [isLoaderLoading, location.pathname]);
 
   const handleToggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
