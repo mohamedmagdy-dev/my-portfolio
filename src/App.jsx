@@ -20,21 +20,30 @@ import LoginPage from "./Pages/LoginPage";
 
 // Store
 import useLoaderStore from "./store/useLoaderStore";
+
 // lib
-import { Route, Routes } from "react-router";
+import { useState, useCallback } from "react";
+import { Route, Routes, useLocation } from "react-router";
 
 export default function App() {
   const loaderState = useLoaderStore((state) => state.isLoading);
+  const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+
+  // Switch the rendered route EXACTLY when the curtains are fully covering the screen
+  const handlePhase1Complete = useCallback(() => {
+    setDisplayLocation(location);
+  }, [location]);
 
   return (
     <>
       <CustomCursor />
       {loaderState && <WebsiteLoader />}
-      <PageSwitchAnimation />
+      <PageSwitchAnimation onPhase1Complete={handlePhase1Complete} />
       <Header />
 
-      <ScrollSmoother>
-        <Routes>
+      <ScrollSmoother locationKey={displayLocation.pathname}>
+        <Routes location={displayLocation}>
           <Route
             path="/"
             element={

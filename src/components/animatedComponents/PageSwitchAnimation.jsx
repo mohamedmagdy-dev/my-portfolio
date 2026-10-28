@@ -3,17 +3,19 @@ import { useRef } from "react";
 import { useLocation } from "react-router";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // store
 import useLoaderStore from "../../store/useLoaderStore";
 import useScrollStore from "../../store/useScrollStore";
 
-export default function PageSwitchAnimation() {
+export default function PageSwitchAnimation({ onPhase1Complete }) {
   const location = useLocation();
   const svgRef = useRef(null);
   const path1Ref = useRef(null);
   const path2Ref = useRef(null);
   const isFirstRender = useRef(true);
+  const currentPathRef = useRef(location.pathname);
 
   // Store
   const isLoaderLoading = useLoaderStore((state) => state.isLoading);
@@ -28,7 +30,20 @@ export default function PageSwitchAnimation() {
     const delayPointsMax = 0.2;
     const delayPerPath = 0.15;
     const duration = 0.8;
+
     if (!isLoaderLoading) {
+      // Avoid running on the very first mount of the website
+      if (isFirstRender.current) {
+        isFirstRender.current = false;
+        currentPathRef.current = location.pathname;
+        return;
+      }
+
+      // Do nothing if navigating to the same URL
+      if (location.pathname === currentPathRef.current) {
+        return;
+      }
+
       const allPoints = [];
       for (let i = 0; i < numPaths; i++) {
         const pts = [];
@@ -64,22 +79,19 @@ export default function PageSwitchAnimation() {
         }
       };
 
-      if (isFirstRender.current) {
-        isFirstRender.current = false;
-        return;
-      }
-
       const tl = gsap.timeline({
         onStart: () => {
           scrollHandler?.paused?.(true);
         },
         onComplete: () => {
           scrollHandler?.paused?.(false);
+          ScrollTrigger.refresh();
         },
       });
 
       tl.set(svgRef.current, { pointerEvents: "auto" });
 
+      // Phase 1: Curtains cover the entire screen from left to right
       for (let i = 0; i < numPaths; i++) {
         const pts = allPoints[i];
         const pathDelay = delayPerPath * (numPaths - i - 1);
@@ -100,12 +112,19 @@ export default function PageSwitchAnimation() {
 
       const phase1EndTime = duration + delayPerPath + delayPointsMax;
 
+      // AT EXACTLY THIS POINT: The screen is 100% covered!
+      // Switch the active page content while it is fully hidden behind the curtain!
       tl.add(() => {
         for (let i = 0; i < numPaths; i++) {
           for (let j = 0; j < numPoints; j++) allPoints[i][j] = 0;
         }
+        currentPathRef.current = location.pathname;
+        if (onPhase1Complete) {
+          onPhase1Complete();
+        }
       }, phase1EndTime);
 
+      // Phase 2: Curtains slide out to the right, revealing the new page content
       for (let i = 0; i < numPaths; i++) {
         const pts = allPoints[i];
         const pathDelay = delayPerPath * i;
