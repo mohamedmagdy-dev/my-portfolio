@@ -7,7 +7,7 @@ export default function CustomCursor() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add("(min-width: 767px)", () => {
-      gsap.set("body", {
+      gsap.set(["body", "a", "button","Link"], {
         cursor: "none",
       });
       const xSetter = gsap.quickSetter(cursorDot.current, "x", "px");
@@ -22,20 +22,25 @@ export default function CustomCursor() {
         ease: "power4",
       });
 
-      const handelMouseCursor = (e) => {
+      const handleMouseCursor = (e) => {
         xSetter(e.clientX);
         ySetter(e.clientY);
         xQuickTo(e.clientX);
         yQuickTo(e.clientY);
       };
 
-      window.addEventListener("mousemove", handelMouseCursor);
+      window.addEventListener("mousemove", handleMouseCursor);
       return () => {
-        gsap.set("body", {
+        gsap.set(["body", "a", "button", "Link"], {
           cursor: "auto",
         });
-        window.removeEventListener("mousemove", handelMouseCursor);
+        window.removeEventListener("mousemove", handleMouseCursor);
       };
+    });
+    mm.add("(max-width: 766px)", () => {
+      gsap.set([cursorDot.current, cursorOutline.current], {
+        display: "none",
+      });
     });
   });
   return (

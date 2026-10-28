@@ -2,14 +2,15 @@
 
 @theme {
   --font-main: "Google Sans Flex", sans-serif;
-  --font-archivo: "Archivo", sans-serif;
+  --color-dark-surface: #1f1d1d;
   --color-charcoal: #161818;
   --color-muted: #8f8a82;
   --color-accent: #81a9fe;
   --color-cream: #ece9e3;
-  /* --breakpoint-sm: 640px;
-  --breakpoint-md: 840px;
-  --breakpoint-lg: 1600px;
-  --breakpoint-xl: 1800px;
-  --breakpoint-2xl: 2000px; */
+
+}
+
+body {
+  font-family: "Archivo", sans-serif;
+  letter-spacing: 1px;
 }

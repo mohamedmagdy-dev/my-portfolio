@@ -26,3 +26,7 @@ dist-ssr
 # Local intent scratchpad
 .project-intent.md
 notes.txt
+
+# Environment variables
+.env
+.env*.local
