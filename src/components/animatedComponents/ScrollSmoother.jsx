@@ -19,24 +19,38 @@ export default function ScrollSmoother({ children, locationKey }) {
       ignoreMobileResize: true,
       normalizeScroll: true,
     });
+
+    if (isLoaderLoading) {
+      scrollSmoother.paused(true);
+    }
+
     setScrollHandler(scrollSmoother);
   }, []);
 
   useGSAP(() => {
     const smoother = sm.get();
-    if (smoother) {
-      if (isLoaderLoading) {
-        smoother.paused(true);
-      } else {
-        smoother.paused(false);
-        smoother.scrollTo(0, false);
-        // Defer refresh slightly so DOM has completely mounted new elements
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
-        });
-      }
+    if (!smoother) return;
+
+    if (isLoaderLoading) {
+      smoother.paused(true);
+    } else {
+      smoother.paused(false);
+      smoother.scrollTo(0, false);
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
     }
-  }, [isLoaderLoading, activePath]);
+  }, [isLoaderLoading]);
+
+  useGSAP(() => {
+    const smoother = sm.get();
+    if (!smoother || isLoaderLoading) return;
+
+    smoother.scrollTo(0, false);
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+  }, [activePath]);
 
   return (
     <div id="smooth-wrapper">
