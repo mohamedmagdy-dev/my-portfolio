@@ -16,8 +16,6 @@ const projects = [
       "/images/projects/mobile-size/nest-ecommerce-lovat.vercel.app_.webp",
     category: "E-Commerce",
     title: "Nest E-Commerce",
-    bgGradientFrom: "from-[#81a9fe]",
-    bgGradientTo: "to-[#312e81]",
     link: "https://nest-ecommerce-lovat.vercel.app/",
   },
   {
@@ -26,8 +24,6 @@ const projects = [
       "/images/projects/mobile-size/online-plant-store-eight.vercel.app_.webp",
     category: "Shop",
     title: "GreenLeaf",
-    bgGradientFrom: "from-[#34d399]",
-    bgGradientTo: "to-[#064e3b]",
     link: "https://online-plant-store-eight.vercel.app/",
   },
   {
@@ -35,8 +31,6 @@ const projects = [
     imageUrl: "/images/projects/mobile-size/g102-landing.vercel.app_.webp",
     category: "Landing Page",
     title: "Logitech G102",
-    bgGradientFrom: "from-[#fb923c]",
-    bgGradientTo: "to-[#881337]",
     link: "https://g102-landing.vercel.app/",
   },
   {
@@ -45,8 +39,6 @@ const projects = [
       "/images/projects/mobile-size/ecommerce-dashboard-seven-omega.vercel.app_.webp",
     category: "Dashboard",
     title: "Admin Dashboard",
-    bgGradientFrom: "from-[#38bdf8]",
-    bgGradientTo: "to-[#0f172a]",
     link: "https://ecommerce-dashboard-seven-omega.vercel.app/",
   },
   {
@@ -54,8 +46,6 @@ const projects = [
     imageUrl: "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
     category: "Web Application",
     title: "Zync Space",
-    bgGradientFrom: "from-[#c084fc]",
-    bgGradientTo: "to-[#3b0764]",
     link: "https://zync-space.vercel.app/",
   },
   {
@@ -64,8 +54,6 @@ const projects = [
       "/images/projects/mobile-size/youssef-portfolio-umber.vercel.app_.webp",
     category: "Portfolio",
     title: "Youssef Portfolio",
-    bgGradientFrom: "from-[#f472b6]",
-    bgGradientTo: "to-[#4c0519]",
     link: "https://youssef-portfolio-umber.vercel.app/",
   },
 ];
@@ -128,10 +116,7 @@ export default function HorizontalWorkSlider() {
   );
 
   return (
-    <section
-      ref={HorizontalWorkSliderRef}
-      className="py-25 lg:py-50 "
-    >
+    <section ref={HorizontalWorkSliderRef} className="py-25 lg:py-50 ">
       <div className="flex items-center gap-4 justify-between mb-10 text-muted text-sm uppercase px-3 lg:px-20 ">
         <span>(mobile eye)</span>
         <span>Drag or scroll</span>
@@ -147,8 +132,6 @@ export default function HorizontalWorkSlider() {
             <div
               className={clsx(
                 " relative overflow-hidden rounded-sm h-150 w-screen sm:w-90 shrink-0 p-3 ",
-                project.bgGradientFrom,
-                project.bgGradientTo,
               )}
             >
               <div className="h-full overflow-hidden rounded-sm">

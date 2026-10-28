@@ -5,6 +5,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { SplitText } from "gsap/SplitText";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
+import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 
 gsap.registerPlugin(
   ScrollTrigger,
@@ -13,4 +14,5 @@ gsap.registerPlugin(
   Draggable,
   InertiaPlugin,
   Observer,
+  MorphSVGPlugin,
 );

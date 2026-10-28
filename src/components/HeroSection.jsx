@@ -175,6 +175,7 @@ export default function HeroSection() {
             ↓ SCROLL. GENTLY
           </span>
           <Link
+            to={"/work"}
             ref={seeWorkButtonRef}
             className="opacity-0 border inline-block max-lg:mt-8 border-gray-300/20 rounded-full py-4 px-10 text-sm"
           >

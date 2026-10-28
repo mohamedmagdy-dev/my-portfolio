@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Link } from "react-router";
 
 const SVG_W = 3898;
 const SVG_H = 891;
@@ -279,30 +280,24 @@ export default function WhatIsNext() {
                 <span className="text-lg font-semibold uppercase tracking-wider text-white/70 mb-1">
                   Explore
                 </span>
-                <a
-                  href="#about"
+                <Link
+                  to={"/about"}
                   className="text-sm md:text-base font-medium text-white hover:opacity-70 transition-opacity"
                 >
                   About
-                </a>
-                <a
-                  href="#projects"
+                </Link>
+                <Link
+                  to={"/work"}
                   className="text-sm md:text-base font-medium text-white hover:opacity-70 transition-opacity"
                 >
                   Projects
-                </a>
-                <a
-                  href="#journey"
+                </Link>
+                <Link
+                  to={"/contact"}
                   className="text-sm md:text-base font-medium text-white hover:opacity-70 transition-opacity"
                 >
-                  Journey
-                </a>
-                <a
-                  href="#toolkit"
-                  className="text-sm md:text-base font-medium text-white hover:opacity-70 transition-opacity"
-                >
-                  Toolkit
-                </a>
+                  Contact Me
+                </Link>
               </div>
 
               <div className="flex flex-col gap-2">

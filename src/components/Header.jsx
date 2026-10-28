@@ -159,7 +159,7 @@ export default function Header() {
         <ul className="overflow-hidden small-screen-navigation -translate-y-25 flex flex-col lg:hidden absolute -z-10 top-full left-0 px-3 lg:px-20 w-full  h-0    text-cream bg-charcoal">
           {links.map((el, index) => {
             return (
-              <NavLink to={`/${el === "home" ? "" : el}`} key={index}>
+              <NavLink onClick={() => setIsMenuOpen(false)} to={`/${el === "home" ? "" : el}`} key={index}>
                 {({ isActive }) => {
                   return (
                     <li
