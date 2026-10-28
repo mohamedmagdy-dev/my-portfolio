@@ -6,9 +6,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // store
 import useScrollStore from "../../store/useScrollStore";
+import useLoaderStore from "../../store/useLoaderStore";
 
 export default function ScrollSmoother({ children, locationKey }) {
   const setScrollHandler = useScrollStore((state) => state.setScrollHandler);
+  const isLoaderLoading = useLoaderStore((state) => state.isLoading);
   const location = useLocation();
   const activePath = locationKey || location.pathname;
 
@@ -18,15 +20,23 @@ export default function ScrollSmoother({ children, locationKey }) {
       normalizeScroll: true,
     });
     setScrollHandler(scrollSmoother);
-  });
+  }, []);
 
   useGSAP(() => {
     const smoother = sm.get();
     if (smoother) {
-      smoother.scrollTo(0, false);
-      ScrollTrigger.refresh();
+      if (isLoaderLoading) {
+        smoother.paused(true);
+      } else {
+        smoother.paused(false);
+        smoother.scrollTo(0, false);
+        // Defer refresh slightly so DOM has completely mounted new elements
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh();
+        });
+      }
     }
-  }, [activePath]);
+  }, [isLoaderLoading, activePath]);
 
   return (
     <div id="smooth-wrapper">

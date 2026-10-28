@@ -11,7 +11,7 @@ export default function WorkPage() {
   }, []);
 
   return (
-    <section className="min-h-screen bg-charcoal overflow-hidden">
+    <section className="min-h-screen bg-charcoal">
       <SelectedWork />
       <HorizontalWorkSlider />
     </section>

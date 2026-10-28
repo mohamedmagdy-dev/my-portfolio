@@ -5,12 +5,14 @@ import { useRef } from "react";
 
 // Store
 import useLoaderStore from "../store/useLoaderStore";
+import useScrollStore from "../store/useScrollStore";
 
 export default function WebsiteLoader() {
   const updateLoaderState = useLoaderStore((state) => state.updateLoaderState);
   const updateAnimationState = useLoaderStore(
     (state) => state.updateAnimationState,
   );
+  const scrollHandler = useScrollStore((state) => state.scrollHandler);
 
   let rowCards = useRef(null);
   let revealBox = useRef(null);
@@ -19,8 +21,12 @@ export default function WebsiteLoader() {
   useGSAP(() => {
     const windowHeight = window.innerHeight;
     const tl = gsap.timeline({
+      onStart: () => {
+        scrollHandler?.paused?.(true);
+      },
       onComplete: () => {
         updateLoaderState(false);
+        scrollHandler?.paused?.(false);
       },
     });
     tl.to(rowCards.current.children, {
@@ -53,7 +59,12 @@ export default function WebsiteLoader() {
     tl.to(revealBoxParent.current, {
       background: "var(--color-charcoal)",
     });
+
+    return () => {
+      scrollHandler?.paused?.(false);
+    };
   }, []);
+
   return (
     <div>
       <div
