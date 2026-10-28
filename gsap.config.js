@@ -5,13 +5,12 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { SplitText } from "gsap/SplitText";
 import { Draggable } from "gsap/Draggable";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
-// import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+
 gsap.registerPlugin(
   ScrollTrigger,
   ScrollSmoother,
   SplitText,
   Draggable,
   InertiaPlugin,
-  // DrawSVGPlugin,
   Observer,
 );
