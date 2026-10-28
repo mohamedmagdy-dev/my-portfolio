@@ -7,6 +7,7 @@ import VideoRevel from "./VideoRevel";
 import TextMarquee from "./TextMarquee";
 import MyJourney from "./MyJourney";
 import MyToolKit from "./MyToolKit";
+import WhatIsNext from "./WhatIsNext";
 
 export default function MainContent() {
   return (
@@ -19,6 +20,7 @@ export default function MainContent() {
       <TextMarquee />
       <MyJourney />
       <MyToolKit />
+      <WhatIsNext />
     </section>
   );
 }

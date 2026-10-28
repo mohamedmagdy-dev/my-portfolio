@@ -1,15 +1,16 @@
 // lib
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { getSelectedProjects } from "../firebase/services/projectsService";
 
-const selectedWork = [
+const fallbackSelectedWork = [
   {
     id: 1,
     category: "Ecommerce",
     title: "Nest E-commerce",
     description: "Modern full-featured e-commerce web application.",
-    image: "/images/projects/ecommerce.webp",
+    desktopImage: "/images/projects/ecommerce.webp",
     projectLink: "https://nest-ecommerce-lovat.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/Nest-Ecommerce",
   },
@@ -18,7 +19,7 @@ const selectedWork = [
     category: "Shop",
     title: "GreenLeaf",
     description: "Curated online store for plant lovers.",
-    image: "/images/projects/greenleaf.webp",
+    desktopImage: "/images/projects/greenleaf.webp",
     projectLink: "https://online-plant-store-eight.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/Online-plant-store",
   },
@@ -27,7 +28,7 @@ const selectedWork = [
     category: "Landing Page",
     title: "Logitech G102",
     description: "Interactive & animated product landing page.",
-    image: "/images/projects/g102.webp",
+    desktopImage: "/images/projects/g102.webp",
     projectLink: "https://g102-landing.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/G102-Landing",
   },
@@ -36,25 +37,49 @@ const selectedWork = [
     category: "Admin Dashboard",
     title: "Admin Dashboard",
     description: "E-commerce management & operations dashboard.",
-    image: "/images/projects/dashboard.webp",
+    desktopImage: "/images/projects/dashboard.webp",
     projectLink: "https://ecommerce-dashboard-seven-omega.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/Ecommerce-Dashboard",
   },
 ];
 
 export default function SelectedWork() {
+  const [projects, setProjects] = useState(fallbackSelectedWork);
   const workContainer = useRef(null);
-  let firstEnter;
+
+  useEffect(() => {
+    let isMounted = true;
+    getSelectedProjects()
+      .then((data) => {
+        if (isMounted && data && data.length > 0) {
+          setProjects(data);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not load selected projects from Firestore:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useGSAP(
     () => {
+      if (!projects || projects.length === 0) return;
+
       gsap.set(".img-preview", {
         xPercent: -50,
         yPercent: -50,
       });
 
-      gsap.utils.toArray(".project-container").forEach((el) => {
+      const containers = gsap.utils.toArray(".project-container");
+
+      containers.forEach((el) => {
+        let firstEnter = true;
         const image = el.querySelector(".img-preview");
+        if (!image) return;
+
         const xSetter = gsap.quickTo(image, "x", {
           duration: 0.4,
           ease: "power3",
@@ -87,41 +112,53 @@ export default function SelectedWork() {
           onReverseComplete: stopFollow,
         });
 
-        el.addEventListener("mouseenter", (e) => {
+        const onMouseEnter = (e) => {
           firstEnter = true;
           fade.play();
           startFollow();
           align(e);
-        });
+        };
 
-        el.addEventListener("mouseleave", () => {
+        const onMouseLeave = () => {
           fade.reverse();
-        });
+        };
+
+        el.addEventListener("mouseenter", onMouseEnter);
+        el.addEventListener("mouseleave", onMouseLeave);
       });
     },
     {
       scope: workContainer,
+      dependencies: [projects],
     },
   );
 
   return (
     <section className=" pt-25 lg:pt-50 px-3 lg:px-20">
       <h2 className="mb-10 text-muted font-main text-sm uppercase">
-        Selected work (0{selectedWork.length})
+        Selected work (0{projects.length})
       </h2>
       <div ref={workContainer}>
         {/* Project Details */}
         <div className=" border-y border-gray-300/20 flex-1">
-          {selectedWork.map((work) => {
+          {projects.map((work, idx) => {
+            const indexNumber = String(work.order || idx + 1).padStart(2, "0");
+            const imageSrc = work.desktopImage || work.image;
+
             return (
-              <a key={work.id} href={work.projectLink} target="_blank">
+              <a
+                key={work.id || idx}
+                href={work.projectLink}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <div className="relative project-container group border-b border-gray-300/20 py-5 lg:py-15 flex flex-col lg:flex-row lg:items-center lg:justify-between">
                   <div className="group-hover:lg:ml-10 duration-300 flex items-center gap-10">
                     <span className="text-accent font-main text-sm">
-                      0{work.id}
+                      {indexNumber}
                     </span>
                     <div>
-                      <h3 className="transition-[font-variation-settings] [font-variation-settings:'wdth'_100] group-hover:lg:[font-variation-settings:'wdth'_105]  group-hover:text-accent  duration-500 font-main mb-2 capitalize text-[clamp(2rem,10vw,5rem)] text-cream">
+                      <h3 className="transition-[font-variation-settings] [font-variation-settings:'wdth'_100] group-hover:lg:[font-variation-settings:'wdth'_105] group-hover:text-accent duration-500 font-main mb-2 capitalize text-[clamp(2rem,10vw,5rem)] text-cream">
                         {work.title}
                       </h3>
                       <p className="uppercase text-sm text-muted ">
@@ -132,13 +169,15 @@ export default function SelectedWork() {
                   <span className="max-md:block max-md:text-center self-end max-md:mt-10 text-cream text-sm mr-3 lg:opacity-0 lg:group-hover:opacity-100 group-hover:mr-0 duration-300">
                     VIEW PROJECT↝
                   </span>
-                  <div className="img-preview opacity-0 hidden  lg:block absolute top-0 left-0 -translate-1/2 pointer-events-none z-50 overflow-hidden rounded-xl w-150 h-75">
-                    <img
-                      className="w-full h-full object-contain rounded-xl"
-                      src={work.image}
-                      alt={work.title}
-                    />
-                  </div>
+                  {imageSrc && (
+                    <div className="img-preview opacity-0 hidden lg:block absolute top-0 left-0 -translate-1/2 pointer-events-none z-50 overflow-hidden rounded-xl w-150 h-75">
+                      <img
+                        className="w-full h-full object-contain rounded-xl"
+                        src={imageSrc}
+                        alt={work.title}
+                      />
+                    </div>
+                  )}
                 </div>
               </a>
             );
