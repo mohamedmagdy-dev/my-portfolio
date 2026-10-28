@@ -22,6 +22,7 @@ export default function VideoRevel() {
           scrub: true,
           pin: true,
           anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
     },

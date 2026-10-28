@@ -95,6 +95,7 @@ export default function HorizontalWorkSlider() {
         trigger: HorizontalWorkSliderRef.current,
         start: "top center",
         end: "bottom+=1000 bottom",
+        invalidateOnRefresh: true,
         onUpdate: (self) => {
           if (!loop.draggable.isDragging && !loop.draggable.isThrowing) {
             const velocity = self.getVelocity();
