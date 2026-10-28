@@ -5,16 +5,20 @@ import HorizontalWorkSlider from "./HorizontalWorkSlider";
 import AboutMe from "./AboutMe";
 import VideoRevel from "./VideoRevel";
 import TextMarquee from "./TextMarquee";
+import MyJourney from "./MyJourney";
+import MyToolKit from "./MyToolKit";
 
 export default function MainContent() {
   return (
-    <section className="bg-charcoal  ">
-      {/* <HorizontalSlider />
+    <section className="bg-charcoal">
+      <HorizontalSlider />
       <SelectedWork />
       <HorizontalWorkSlider />
       <AboutMe />
-      <VideoRevel /> */}
+      <VideoRevel />
       <TextMarquee />
+      <MyJourney />
+      <MyToolKit />
     </section>
   );
 }

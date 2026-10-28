@@ -24,6 +24,7 @@ export default function AboutMe() {
           pin: true,
           start: "top top",
           scrub: 1,
+          invalidateOnRefresh: true,
         },
       });
     },
