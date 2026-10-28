@@ -6,11 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // store
 import useScrollStore from "../../store/useScrollStore";
-import useLoaderStore from "../../store/useLoaderStore";
 
 export default function ScrollSmoother({ children, locationKey }) {
   const setScrollHandler = useScrollStore((state) => state.setScrollHandler);
-  const isLoaderLoading = useLoaderStore((state) => state.isLoading);
   const location = useLocation();
   const activePath = locationKey || location.pathname;
 
@@ -19,37 +17,15 @@ export default function ScrollSmoother({ children, locationKey }) {
       ignoreMobileResize: true,
       normalizeScroll: true,
     });
-
-    if (isLoaderLoading) {
-      scrollSmoother.paused(true);
-    }
-
     setScrollHandler(scrollSmoother);
-  }, []);
+  });
 
   useGSAP(() => {
     const smoother = sm.get();
-    if (!smoother) return;
-
-    if (isLoaderLoading) {
-      smoother.paused(true);
-    } else {
-      smoother.paused(false);
+    if (smoother) {
       smoother.scrollTo(0, false);
-      requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-      });
-    }
-  }, [isLoaderLoading]);
-
-  useGSAP(() => {
-    const smoother = sm.get();
-    if (!smoother || isLoaderLoading) return;
-
-    smoother.scrollTo(0, false);
-    requestAnimationFrame(() => {
       ScrollTrigger.refresh();
-    });
+    }
   }, [activePath]);
 
   return (

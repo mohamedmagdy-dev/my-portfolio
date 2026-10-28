@@ -1,5 +1,9 @@
 import { useEffect } from "react";
 
+// store
+import useScrollStore from "../store/useScrollStore";
+import useLoaderStore from "../store/useLoaderStore";
+
 const socialLinks = [
   {
     name: "GitHub",
@@ -20,6 +24,17 @@ const socialLinks = [
 
 export default function ContactPage() {
   const email = "mohamedmagdyelsayed7@gmail.com";
+
+    const scrollHandler = useScrollStore((state) => state.scrollHandler);
+    const isSiteLoaderLoading = useLoaderStore((state) => state.isLoading);
+
+    useEffect(() => {
+      if (isSiteLoaderLoading) {
+        scrollHandler?.paused?.(true);
+      } else {
+        scrollHandler?.paused?.(false);
+      }
+    }, [isSiteLoaderLoading, scrollHandler]);
 
   useEffect(() => {
     document.title = "Contact | Mohamed Magdy";

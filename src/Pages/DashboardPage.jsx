@@ -3,6 +3,11 @@ import { Link, useNavigate } from "react-router";
 import { isFirebaseConfigured } from "../firebase/config";
 import { isCloudinaryConfigured } from "../services/cloudinaryService";
 import { logoutAdmin } from "../firebase/services/authService";
+
+// store
+import useScrollStore from "../store/useScrollStore";
+import useLoaderStore from "../store/useLoaderStore";
+
 import {
   getAllProjects,
   createProject,
@@ -19,7 +24,8 @@ const defaultSeedProjects = [
     projectLink: "https://nest-ecommerce-lovat.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/Nest-Ecommerce",
     desktopImage: "/images/projects/ecommerce.webp",
-    mobileImage: "/images/projects/mobile-size/nest-ecommerce-lovat.vercel.app_.webp",
+    mobileImage:
+      "/images/projects/mobile-size/nest-ecommerce-lovat.vercel.app_.webp",
     showInSelected: true,
     showInSlider: true,
     order: 1,
@@ -31,7 +37,8 @@ const defaultSeedProjects = [
     projectLink: "https://online-plant-store-eight.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/Online-plant-store",
     desktopImage: "/images/projects/greenleaf.webp",
-    mobileImage: "/images/projects/mobile-size/online-plant-store-eight.vercel.app_.webp",
+    mobileImage:
+      "/images/projects/mobile-size/online-plant-store-eight.vercel.app_.webp",
     showInSelected: true,
     showInSlider: true,
     order: 2,
@@ -55,7 +62,8 @@ const defaultSeedProjects = [
     projectLink: "https://ecommerce-dashboard-seven-omega.vercel.app/",
     githubLink: "https://github.com/mohamedmagdy-dev/Ecommerce-Dashboard",
     desktopImage: "/images/projects/dashboard.webp",
-    mobileImage: "/images/projects/mobile-size/ecommerce-dashboard-seven-omega.vercel.app_.webp",
+    mobileImage:
+      "/images/projects/mobile-size/ecommerce-dashboard-seven-omega.vercel.app_.webp",
     showInSelected: true,
     showInSlider: true,
     order: 4,
@@ -67,7 +75,8 @@ const defaultSeedProjects = [
     projectLink: "https://zync-space.vercel.app/",
     githubLink: "",
     desktopImage: "/images/projects/ecommerce.webp",
-    mobileImage: "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
+    mobileImage:
+      "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
     showInSelected: false,
     showInSlider: true,
     order: 5,
@@ -79,7 +88,8 @@ const defaultSeedProjects = [
     projectLink: "https://youssef-portfolio-umber.vercel.app/",
     githubLink: "",
     desktopImage: "/images/projects/greenleaf.webp",
-    mobileImage: "/images/projects/mobile-size/youssef-portfolio-umber.vercel.app_.webp",
+    mobileImage:
+      "/images/projects/mobile-size/youssef-portfolio-umber.vercel.app_.webp",
     showInSelected: false,
     showInSlider: true,
     order: 6,
@@ -115,6 +125,17 @@ export default function DashboardPage() {
   const [mobileFile, setMobileFile] = useState(null);
   const [desktopPreview, setDesktopPreview] = useState("");
   const [mobilePreview, setMobilePreview] = useState("");
+
+  const scrollHandler = useScrollStore((state) => state.scrollHandler);
+  const isSiteLoaderLoading = useLoaderStore((state) => state.isLoading);
+
+  useEffect(() => {
+    if (isSiteLoaderLoading) {
+      scrollHandler?.paused?.(true);
+    } else {
+      scrollHandler?.paused?.(false);
+    }
+  }, [isSiteLoaderLoading, scrollHandler]);
 
   const navigate = useNavigate();
 
@@ -220,7 +241,7 @@ export default function DashboardPage() {
 
     if ((desktopFile || mobileFile) && !isCloudinaryConfigured) {
       setErrorMsg(
-        "You selected an image file, but Cloudinary is not configured yet. Please add VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET to .env, or paste direct image URLs instead."
+        "You selected an image file, but Cloudinary is not configured yet. Please add VITE_CLOUDINARY_CLOUD_NAME and VITE_CLOUDINARY_UPLOAD_PRESET to .env, or paste direct image URLs instead.",
       );
       return;
     }
@@ -236,7 +257,7 @@ export default function DashboardPage() {
           editingProject.id,
           formData,
           desktopFile,
-          mobileFile
+          mobileFile,
         );
         setSuccessMsg("Project updated successfully!");
       } else {
@@ -257,7 +278,7 @@ export default function DashboardPage() {
   const handleDelete = async (project) => {
     if (
       !window.confirm(
-        `Are you sure you want to delete "${project.title}"? This cannot be undone.`
+        `Are you sure you want to delete "${project.title}"? This cannot be undone.`,
       )
     ) {
       return;
@@ -279,7 +300,7 @@ export default function DashboardPage() {
     }
     if (
       !window.confirm(
-        "Do you want to import initial portfolio projects into Firestore?"
+        "Do you want to import initial portfolio projects into Firestore?",
       )
     ) {
       return;
@@ -315,7 +336,8 @@ export default function DashboardPage() {
             </h1>
           </div>
           <p className="text-muted text-sm mt-2">
-            Upload, sort, and control projects displayed in SelectedWork & Horizontal Slider.
+            Upload, sort, and control projects displayed in SelectedWork &
+            Horizontal Slider.
           </p>
         </div>
 
@@ -370,16 +392,27 @@ export default function DashboardPage() {
           <div className="mt-4 pt-4 border-t border-sky-500/20 text-xs text-sky-200/90 grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="p-3 bg-charcoal/60 rounded-lg">
               <span className="text-accent font-bold">1. أنشئ حساب مجاني</span>
-              <p className="text-muted mt-1">سجل مجاناً في cloudinary.com وانسخ اسم الـ <strong>Cloud Name</strong> من لوحة التحكم.</p>
+              <p className="text-muted mt-1">
+                سجل مجاناً في cloudinary.com وانسخ اسم الـ{" "}
+                <strong>Cloud Name</strong> من لوحة التحكم.
+              </p>
             </div>
             <div className="p-3 bg-charcoal/60 rounded-lg">
-              <span className="text-accent font-bold">2. أنشئ Upload Preset</span>
-              <p className="text-muted mt-1">ادخل Settings ➔ Upload ➔ Upload presets ➔ Add new preset واجعل الـ Signing Mode: <strong>Unsigned</strong>.</p>
+              <span className="text-accent font-bold">
+                2. أنشئ Upload Preset
+              </span>
+              <p className="text-muted mt-1">
+                ادخل Settings ➔ Upload ➔ Upload presets ➔ Add new preset واجعل
+                الـ Signing Mode: <strong>Unsigned</strong>.
+              </p>
             </div>
             <div className="p-3 bg-charcoal/60 rounded-lg">
-              <span className="text-accent font-bold">3. ضعهما في ملف .env</span>
+              <span className="text-accent font-bold">
+                3. ضعهما في ملف .env
+              </span>
               <code className="block mt-1 bg-black/40 p-1.5 rounded text-[11px] text-accent">
-                VITE_CLOUDINARY_CLOUD_NAME=...<br />
+                VITE_CLOUDINARY_CLOUD_NAME=...
+                <br />
                 VITE_CLOUDINARY_UPLOAD_PRESET=...
               </code>
             </div>
@@ -391,37 +424,57 @@ export default function DashboardPage() {
       {errorMsg && (
         <div className="mt-6 p-4 rounded-lg bg-red-500/10 border border-red-500/40 text-red-300 text-sm flex justify-between items-center">
           <span>{errorMsg}</span>
-          <button onClick={() => setErrorMsg("")} className="text-red-400 hover:text-white">✕</button>
+          <button
+            onClick={() => setErrorMsg("")}
+            className="text-red-400 hover:text-white"
+          >
+            ✕
+          </button>
         </div>
       )}
 
       {successMsg && (
         <div className="mt-6 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/40 text-emerald-300 text-sm flex justify-between items-center">
           <span>{successMsg}</span>
-          <button onClick={() => setSuccessMsg("")} className="text-emerald-400 hover:text-white">✕</button>
+          <button
+            onClick={() => setSuccessMsg("")}
+            className="text-emerald-400 hover:text-white"
+          >
+            ✕
+          </button>
         </div>
       )}
 
       {/* Quick Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
         <div className="p-5 rounded-xl bg-dark-surface border border-gray-800">
-          <span className="text-muted text-xs uppercase font-medium">Total Projects</span>
+          <span className="text-muted text-xs uppercase font-medium">
+            Total Projects
+          </span>
           <p className="text-3xl font-bold text-cream mt-1">{totalProjects}</p>
         </div>
         <div className="p-5 rounded-xl bg-dark-surface border border-gray-800">
-          <span className="text-muted text-xs uppercase font-medium">Selected Work (Desktop List)</span>
+          <span className="text-muted text-xs uppercase font-medium">
+            Selected Work (Desktop List)
+          </span>
           <p className="text-3xl font-bold text-accent mt-1">{selectedCount}</p>
         </div>
         <div className="p-5 rounded-xl bg-dark-surface border border-gray-800">
-          <span className="text-muted text-xs uppercase font-medium">Horizontal Slider (Mobile Loop)</span>
-          <p className="text-3xl font-bold text-emerald-400 mt-1">{sliderCount}</p>
+          <span className="text-muted text-xs uppercase font-medium">
+            Horizontal Slider (Mobile Loop)
+          </span>
+          <p className="text-3xl font-bold text-emerald-400 mt-1">
+            {sliderCount}
+          </p>
         </div>
       </div>
 
       {/* Projects Table / Empty State */}
       <div className="mt-10 bg-dark-surface border border-gray-800 rounded-2xl overflow-hidden">
         <div className="p-5 border-b border-gray-800 flex items-center justify-between flex-wrap gap-4">
-          <h2 className="text-lg font-semibold text-cream">Manage Projects ({projects.length})</h2>
+          <h2 className="text-lg font-semibold text-cream">
+            Manage Projects ({projects.length})
+          </h2>
           {isFirebaseConfigured && projects.length === 0 && !loading && (
             <button
               onClick={handleSeedDefaults}
@@ -441,7 +494,8 @@ export default function DashboardPage() {
           <div className="py-20 text-center text-muted px-4">
             <p className="text-lg text-cream mb-2">No projects found</p>
             <p className="text-sm max-w-md mx-auto mb-6">
-              You haven't uploaded any projects yet. Click the button below to add your first work or seed your existing ones.
+              You haven't uploaded any projects yet. Click the button below to
+              add your first work or seed your existing ones.
             </p>
             <button
               onClick={handleOpenAddModal}
@@ -733,7 +787,7 @@ export default function DashboardPage() {
                   <label className="block text-xs uppercase text-muted font-semibold mb-2">
                     Desktop Image (SelectedWork Hover)
                   </label>
-                  
+
                   {/* File Upload to Cloudinary */}
                   <input
                     type="file"
@@ -744,12 +798,17 @@ export default function DashboardPage() {
 
                   {/* Or Direct Image URL */}
                   <div className="mt-3">
-                    <span className="text-[11px] text-muted">أو الصق رابط الصورة مباشرة (URL):</span>
+                    <span className="text-[11px] text-muted">
+                      أو الصق رابط الصورة مباشرة (URL):
+                    </span>
                     <input
                       type="text"
                       value={formData.desktopImage}
                       onChange={(e) => {
-                        setFormData({ ...formData, desktopImage: e.target.value });
+                        setFormData({
+                          ...formData,
+                          desktopImage: e.target.value,
+                        });
                         if (!desktopFile) setDesktopPreview(e.target.value);
                       }}
                       placeholder="https://... or /images/projects/..."
@@ -784,12 +843,17 @@ export default function DashboardPage() {
 
                   {/* Or Direct Image URL */}
                   <div className="mt-3">
-                    <span className="text-[11px] text-muted">أو الصق رابط الصورة مباشرة (URL):</span>
+                    <span className="text-[11px] text-muted">
+                      أو الصق رابط الصورة مباشرة (URL):
+                    </span>
                     <input
                       type="text"
                       value={formData.mobileImage}
                       onChange={(e) => {
-                        setFormData({ ...formData, mobileImage: e.target.value });
+                        setFormData({
+                          ...formData,
+                          mobileImage: e.target.value,
+                        });
                         if (!mobileFile) setMobilePreview(e.target.value);
                       }}
                       placeholder="https://... or /images/projects/mobile-size/..."
@@ -833,7 +897,11 @@ export default function DashboardPage() {
                   {saving && (
                     <span className="w-4 h-4 border-2 border-charcoal border-t-transparent rounded-full animate-spin" />
                   )}
-                  {saving ? "Saving..." : editingProject ? "Save Changes" : "Create Project"}
+                  {saving
+                    ? "Saving..."
+                    : editingProject
+                      ? "Save Changes"
+                      : "Create Project"}
                 </button>
               </div>
             </form>

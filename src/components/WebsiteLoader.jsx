@@ -5,34 +5,24 @@ import { useRef } from "react";
 
 // Store
 import useLoaderStore from "../store/useLoaderStore";
-import useScrollStore from "../store/useScrollStore";
 
 export default function WebsiteLoader() {
   const updateLoaderState = useLoaderStore((state) => state.updateLoaderState);
   const updateAnimationState = useLoaderStore(
     (state) => state.updateAnimationState,
   );
-  const scrollHandler = useScrollStore((state) => state.scrollHandler);
 
   let rowCards = useRef(null);
   let revealBox = useRef(null);
   let revealBoxParent = useRef(null);
 
   useGSAP(() => {
-    // Pause smoother scroll while loader animation runs
-    scrollHandler?.paused?.(true);
-
     const windowHeight = window.innerHeight;
     const tl = gsap.timeline({
-      onStart: () => {
-        scrollHandler?.paused?.(true);
-      },
       onComplete: () => {
         updateLoaderState(false);
-        scrollHandler?.paused?.(false);
       },
     });
-
     tl.to(rowCards.current.children, {
       xPercent: gsap.utils.wrap([100, -100]),
       duration: 1.5,
@@ -53,7 +43,6 @@ export default function WebsiteLoader() {
         updateAnimationState(true);
       },
     });
-
     tl.to(revealBox.current, {
       width: "100%",
       height: "100%",
@@ -61,16 +50,10 @@ export default function WebsiteLoader() {
       borderRadius: 0,
       duration: 1.2,
     });
-
     tl.to(revealBoxParent.current, {
       background: "var(--color-charcoal)",
     });
-
-    return () => {
-      scrollHandler?.paused?.(false);
-    };
-  }, [scrollHandler]);
-
+  }, []);
   return (
     <div>
       <div

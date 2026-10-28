@@ -5,13 +5,27 @@ import { useEffect } from "react";
 import SelectedWork from "../components/SelectedWork";
 import HorizontalWorkSlider from "../components/HorizontalWorkSlider";
 
+// store
+import useScrollStore from "../store/useScrollStore";
+import useLoaderStore from "../store/useLoaderStore";
+
 export default function WorkPage() {
+  const scrollHandler = useScrollStore((state) => state.scrollHandler);
+  const isSiteLoaderLoading = useLoaderStore((state) => state.isLoading);
+
+  useEffect(() => {
+    if (isSiteLoaderLoading) {
+      scrollHandler?.paused?.(true);
+    } else {
+      scrollHandler?.paused?.(false);
+    }
+  }, [isSiteLoaderLoading, scrollHandler]);
   useEffect(() => {
     document.title = "Work | Mohamed Magdy";
   }, []);
 
   return (
-    <section className="min-h-screen bg-charcoal">
+    <section className="min-h-screen bg-charcoal overflow-hidden">
       <SelectedWork />
       <HorizontalWorkSlider />
     </section>

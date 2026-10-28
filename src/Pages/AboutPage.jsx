@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router";
 
+// store
+import useScrollStore from "../store/useScrollStore";
+import useLoaderStore from "../store/useLoaderStore";
+
 const values = [
   {
     number: "01",
@@ -19,9 +23,17 @@ const values = [
   },
 ];
 
-
-
 export default function AboutPage() {
+  const scrollHandler = useScrollStore((state) => state.scrollHandler);
+  const isSiteLoaderLoading = useLoaderStore((state) => state.isLoading);
+
+  useEffect(() => {
+    if (isSiteLoaderLoading) {
+      scrollHandler?.paused?.(true);
+    } else {
+      scrollHandler?.paused?.(false);
+    }
+  }, [isSiteLoaderLoading, scrollHandler]);
   useEffect(() => {
     document.title = "About | Mohamed Magdy";
   }, []);
@@ -49,10 +61,18 @@ export default function AboutPage() {
         </div>
         <div className="lg:col-span-8 flex flex-col gap-6 text-lg sm:text-2xl font-main font-medium leading-relaxed text-cream/90">
           <p>
-            I’m <span className="text-white font-bold">Mohamed Magdy (Mego)</span>, a Creative Frontend Developer based in Alexandria, Egypt. I sit at the intersection between refined visual design and technical frontend engineering.
+            I’m{" "}
+            <span className="text-white font-bold">Mohamed Magdy (Mego)</span>,
+            a Creative Frontend Developer based in Alexandria, Egypt. I sit at
+            the intersection between refined visual design and technical
+            frontend engineering.
           </p>
           <p className="text-muted text-base sm:text-xl">
-            My passion is turning static designs into living, breathing web products. I specialize in building highly interactive interfaces powered by React, modern JavaScript, and fluid GSAP physics — ensuring that every scroll, click, and transition feels natural and memorable.
+            My passion is turning static designs into living, breathing web
+            products. I specialize in building highly interactive interfaces
+            powered by React, modern JavaScript, and fluid GSAP physics —
+            ensuring that every scroll, click, and transition feels natural and
+            memorable.
           </p>
         </div>
       </div>
@@ -82,8 +102,6 @@ export default function AboutPage() {
           ))}
         </div>
       </div>
-
-  
 
       <div className="mt-8 p-10 md:p-16 rounded-3xl bg-dark-surface/60 border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
         <div>

@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Link } from "react-router";
 import { loginAdmin, onAuthChange } from "../firebase/services/authService";
+// store
+import useScrollStore from "../store/useScrollStore";
+import useLoaderStore from "../store/useLoaderStore";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,6 +14,17 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const scrollHandler = useScrollStore((state) => state.scrollHandler);
+  const isSiteLoaderLoading = useLoaderStore((state) => state.isLoading);
+
+  useEffect(() => {
+    if (isSiteLoaderLoading) {
+      scrollHandler?.paused?.(true);
+    } else {
+      scrollHandler?.paused?.(false);
+    }
+  }, [isSiteLoaderLoading, scrollHandler]);
 
   // If already authenticated, redirect straight to dashboard
   useEffect(() => {
@@ -35,8 +49,12 @@ export default function LoginPage() {
       navigate(from, { replace: true });
     } catch (err) {
       let message = "Invalid email or password.";
-      if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-        message = "Incorrect email or password. Please verify your admin credentials.";
+      if (
+        err.code === "auth/user-not-found" ||
+        err.code === "auth/invalid-credential"
+      ) {
+        message =
+          "Incorrect email or password. Please verify your admin credentials.";
       } else if (err.code === "auth/too-many-requests") {
         message = "Too many failed attempts. Please try again later.";
       } else if (err.code === "auth/network-request-failed") {
@@ -73,7 +91,9 @@ export default function LoginPage() {
               />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-cream tracking-tight">Admin Access</h1>
+          <h1 className="text-2xl font-bold text-cream tracking-tight">
+            Admin Access
+          </h1>
           <p className="text-muted text-xs mt-1.5">
             Sign in to manage projects and portfolio content
           </p>
