@@ -1,71 +1,91 @@
 // lib
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { InertiaPlugin } from "gsap/InertiaPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import clsx from "clsx";
 
 // utils
 import horizontalLoop from "../utils/horizontalLoop";
-import { useRef } from "react";
-import clsx from "clsx";
+import { getSliderProjects } from "../firebase/services/projectsService";
 
-const projects = [
+const fallbackProjects = [
   {
     id: 1,
-    imageUrl:
+    mobileImage:
       "/images/projects/mobile-size/nest-ecommerce-lovat.vercel.app_.webp",
     category: "E-Commerce",
     title: "Nest E-Commerce",
-    link: "https://nest-ecommerce-lovat.vercel.app/",
+    projectLink: "https://nest-ecommerce-lovat.vercel.app/",
   },
   {
     id: 2,
-    imageUrl:
+    mobileImage:
       "/images/projects/mobile-size/online-plant-store-eight.vercel.app_.webp",
     category: "Shop",
     title: "GreenLeaf",
-    link: "https://online-plant-store-eight.vercel.app/",
+    projectLink: "https://online-plant-store-eight.vercel.app/",
   },
   {
     id: 3,
-    imageUrl: "/images/projects/mobile-size/g102-landing.vercel.app_.webp",
+    mobileImage: "/images/projects/mobile-size/g102-landing.vercel.app_.webp",
     category: "Landing Page",
     title: "Logitech G102",
-    link: "https://g102-landing.vercel.app/",
+    projectLink: "https://g102-landing.vercel.app/",
   },
   {
     id: 4,
-    imageUrl:
+    mobileImage:
       "/images/projects/mobile-size/ecommerce-dashboard-seven-omega.vercel.app_.webp",
     category: "Dashboard",
     title: "Admin Dashboard",
-    link: "https://ecommerce-dashboard-seven-omega.vercel.app/",
+    projectLink: "https://ecommerce-dashboard-seven-omega.vercel.app/",
   },
   {
     id: 5,
-    imageUrl: "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
+    mobileImage: "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
     category: "Web Application",
     title: "Zync Space",
-    link: "https://zync-space.vercel.app/",
+    projectLink: "https://zync-space.vercel.app/",
   },
   {
     id: 6,
-    imageUrl:
+    mobileImage:
       "/images/projects/mobile-size/youssef-portfolio-umber.vercel.app_.webp",
     category: "Portfolio",
     title: "Youssef Portfolio",
-    link: "https://youssef-portfolio-umber.vercel.app/",
+    projectLink: "https://youssef-portfolio-umber.vercel.app/",
   },
 ];
 
 export default function HorizontalWorkSlider() {
+  const [projects, setProjects] = useState(fallbackProjects);
   const HorizontalWorkSliderRef = useRef(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    getSliderProjects()
+      .then((data) => {
+        if (isMounted && data && data.length > 0) {
+          setProjects(data);
+        }
+      })
+      .catch((err) => {
+        console.warn("Could not load slider projects from Firestore:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useGSAP(
     () => {
-      // ScrollTrigger.create,
+      if (!projects || projects.length === 0) return;
 
       const workBoxes = gsap.utils.toArray(".work-box");
+      if (workBoxes.length === 0) return;
 
       const loop = horizontalLoop(workBoxes, {
         draggable: true,
@@ -76,10 +96,9 @@ export default function HorizontalWorkSlider() {
 
       const proxy = loop.draggable.target;
       const clamp = gsap.utils.clamp(-5, 5);
-
       const skewSetter = gsap.quickSetter(workBoxes, "skewX", "deg");
 
-      ScrollTrigger.create({
+      const trigger = ScrollTrigger.create({
         trigger: HorizontalWorkSliderRef.current,
         start: "top center",
         end: "bottom+=1000 bottom",
@@ -96,7 +115,7 @@ export default function HorizontalWorkSlider() {
         },
       });
 
-      gsap.ticker.add(() => {
+      const tickerCallback = () => {
         if (loop.draggable.isDragging || loop.draggable.isThrowing) {
           const vx = InertiaPlugin.getVelocity(proxy, "x");
           skewSetter(clamp(vx / -300));
@@ -108,10 +127,19 @@ export default function HorizontalWorkSlider() {
             overwrite: "auto",
           });
         }
-      });
+      };
+
+      gsap.ticker.add(tickerCallback);
+
+      return () => {
+        gsap.ticker.remove(tickerCallback);
+        trigger?.kill();
+        loop?.kill?.();
+      };
     },
     {
       scope: HorizontalWorkSliderRef,
+      dependencies: [projects],
     },
   );
 
@@ -122,32 +150,41 @@ export default function HorizontalWorkSlider() {
         <span>Drag or scroll</span>
       </div>
       <div className="flex gap-10 justify-start items-center overflow-hidden max-sm:px-5">
-        {projects.map((project) => (
-          <a
-            href={project.link}
-            target="_blank"
-            className="work-box"
-            key={project.id}
-          >
-            <div
-              className={clsx(
-                " relative overflow-hidden rounded-sm h-150 w-screen sm:w-90 shrink-0 p-3 ",
-              )}
+        {projects.map((project, idx) => {
+          const imageSrc =
+            project.mobileImage || project.imageUrl || project.desktopImage;
+          const link = project.projectLink || project.link || "#";
+
+          return (
+            <a
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+              className="work-box"
+              key={project.id || idx}
             >
-              <div className="h-full overflow-hidden rounded-sm">
-                <img
-                  src={project.imageUrl}
-                  className="w-full rounded-sm"
-                  alt={project.title}
-                />
+              <div
+                className={clsx(
+                  " relative overflow-hidden rounded-sm h-150 w-screen sm:w-90 shrink-0 p-3 ",
+                )}
+              >
+                <div className="h-full overflow-hidden rounded-sm">
+                  {imageSrc && (
+                    <img
+                      src={imageSrc}
+                      className="w-full rounded-sm"
+                      alt={project.title}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="mt-3 flex items-center justify-between text-muted text-sm px-1">
-              <span>{project.category}</span>
-              <span>{project.title}</span>
-            </div>
-          </a>
-        ))}
+              <div className="mt-3 flex items-center justify-between text-muted text-sm px-1">
+                <span>{project.category}</span>
+                <span>{project.title}</span>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </section>
   );

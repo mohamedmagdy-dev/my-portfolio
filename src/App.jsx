@@ -8,12 +8,15 @@ import ScrollSmoother from "./components/animatedComponents/ScrollSmoother";
 import CustomCursor from "./components/CustomCursor";
 import Header from "./components/Header";
 import PageSwitchAnimation from "./components/animatedComponents/PageSwitchAnimation";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Pages
 import HomePage from "./Pages/HomePage";
 import WorkPage from "./Pages/WorkPage";
 import AboutPage from "./Pages/AboutPage";
 import ContactPage from "./Pages/ContactPage";
+import DashboardPage from "./Pages/DashboardPage";
+import LoginPage from "./Pages/LoginPage";
 
 // Store
 import useLoaderStore from "./store/useLoaderStore";
@@ -44,6 +47,15 @@ export default function App() {
           <Route path="/work" element={<WorkPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </ScrollSmoother>
     </>
