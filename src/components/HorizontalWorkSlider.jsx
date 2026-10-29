@@ -185,8 +185,7 @@ export default function HorizontalWorkSlider() {
                       src={imageSrc}
                       className="w-full rounded-sm"
                       alt={project.title}
-                      loading="lazy"
-                      decoding="async"
+    
                     />
                   )}
                 </div>
