@@ -84,6 +84,7 @@ export default function TextMarquee() {
         <p
           ref={textMarquee}
           className="text-[clamp(4rem,10vw,9rem)] text-nowrap translate-x-full"
+          aria-label="Code is how I build it. Creativity is how I make it matter."
         >
           Code is how I <span className="text-accent">build</span> it.
           Creativity is how I make it{" "}

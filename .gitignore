@@ -30,3 +30,4 @@ notes.txt
 # Environment variables
 .env
 .env*.local
+.env.example

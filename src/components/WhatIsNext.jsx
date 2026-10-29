@@ -7,8 +7,7 @@ import { Link } from "react-router";
 const SVG_W = 3898;
 const SVG_H = 891;
 const PATH_D =
-  "M0.398438 611.016C175.398 377.517 857.398 -285.484 1461.4 139.638C1911.53 456.46 2114.4 805.516 2679.4 611.016C3088.4 470.219 3704.54 -33.3124 4354.9 781.516C4700.9 1215.02 5305.6 1466.52 6108.4 328.516";
-
+  "M0.398438 611.016C175.398 420 857.398 50 1461.4 260C1911.53 470 2114.4 780 2679.4 611.016C3088.4 470.219 3704.54 180 4354.9 781.516C4700.9 1215.02 5305.6 1466.52 6108.4 328.516";
 const TEXT_CREAM = "If our visions align, ";
 const TEXT_GRAD = "let’s shape what’s next";
 const TOTAL_CHARS = TEXT_CREAM.length + TEXT_GRAD.length;
@@ -219,13 +218,13 @@ export default function WhatIsNext() {
       <div className="next-container relative w-full h-screen overflow-hidden flex flex-col justify-between p-6 md:p-8 gap-8">
         <div className="relative w-full flex-1 flex items-center justify-center overflow-visible">
           <div className="next-intro absolute z-10 flex flex-col items-center justify-center pointer-events-none select-none">
-            <h2 className="text-[clamp(48px,7vw,120px)] font-bold tracking-tight leading-none text-[#f5e7df] text-nowrap">
+            <h2 className="text-[clamp(48px,7vw,110px)] font-bold tracking-tight leading-none text-[#f5e7df] text-nowrap">
               What’s next?
             </h2>
           </div>
 
           <svg
-            className="next-svg absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none overflow-visible z-2"
+            className="next-svg absolute left-0 top-1/3 -translate-y-1/2 pointer-events-none overflow-visible z-2"
             style={{ width: "300vw", height: "auto" }}
             viewBox={`0 0 ${SVG_W} ${SVG_H}`}
             fill="none"

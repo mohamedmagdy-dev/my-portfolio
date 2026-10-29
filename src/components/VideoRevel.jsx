@@ -37,6 +37,7 @@ export default function VideoRevel() {
       className="relative w-full h-screen overflow-hidden bg-white"
     >
       <video
+        preload="none"
         autoPlay
         muted
         loop

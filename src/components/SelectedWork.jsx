@@ -175,6 +175,8 @@ export default function SelectedWork() {
                         className="w-full h-full object-contain rounded-xl"
                         src={imageSrc}
                         alt={work.title}
+                        loading="lazy" 
+                        decoding="async" 
                       />
                     </div>
                   )}
