@@ -3,7 +3,7 @@ import HorizontalSlider from "../components/HorizontalSlider";
 import SelectedWork from "../components/SelectedWork";
 import HorizontalWorkSlider from "../components/HorizontalWorkSlider";
 import AboutMe from "../components/AboutMe";
-import VideoRevel from "../components/VideoRevel";
+// import VideoRevel from "../components/VideoRevel";
 import TextMarquee from "../components/TextMarquee";
 import MyJourney from "../components/MyJourney";
 import MyToolKit from "../components/MyToolKit";

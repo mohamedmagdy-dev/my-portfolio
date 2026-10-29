@@ -48,13 +48,13 @@ export default function HeroSection() {
             duration: 1,
           },
           "<",
-          tl.to(
-            [".hero-dec", ".hero-scroll-indicator", seeWorkButtonRef.current],
-            {
-              opacity: 1,
-              stagger: 0.3,
-            },
-          ),
+        );
+        tl.to(
+          [".hero-dec", ".hero-scroll-indicator", seeWorkButtonRef.current],
+          {
+            opacity: 1,
+            stagger: 0.3,
+          },
         );
       }
 
