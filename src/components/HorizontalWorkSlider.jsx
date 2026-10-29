@@ -44,7 +44,8 @@ const fallbackProjects = [
   },
   {
     id: 5,
-    mobileImage: "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
+    mobileImage:
+      "/images/projects/mobile-size/zync-space.vercel.app_login.webp",
     category: "Web Application",
     title: "Zync Space",
     projectLink: "https://zync-space.vercel.app/",
@@ -115,11 +116,21 @@ export default function HorizontalWorkSlider() {
         },
       });
 
+      let isSkewed = false;
+
       const tickerCallback = () => {
         if (loop.draggable.isDragging || loop.draggable.isThrowing) {
           const vx = InertiaPlugin.getVelocity(proxy, "x");
-          skewSetter(clamp(vx / -300));
-        } else {
+          const skew = clamp(vx / -300);
+
+          skewSetter(skew);
+
+          if (Math.abs(skew) > 0.001) {
+            isSkewed = true;
+          }
+        } else if (isSkewed) {
+          isSkewed = false;
+
           gsap.to(workBoxes, {
             skewX: 0,
             duration: 0.3,
@@ -175,7 +186,7 @@ export default function HorizontalWorkSlider() {
                       className="w-full rounded-sm"
                       alt={project.title}
                       loading="lazy"
-                      decoding="async" 
+                      decoding="async"
                     />
                   )}
                 </div>

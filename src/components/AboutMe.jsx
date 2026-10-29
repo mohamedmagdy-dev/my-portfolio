@@ -23,6 +23,7 @@ export default function AboutMe() {
           trigger: aboutMeRef.current,
           pin: true,
           start: "top top",
+          end: "+=3000px",
           scrub: 1,
           invalidateOnRefresh: true,
         },

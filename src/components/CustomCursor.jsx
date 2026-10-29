@@ -7,7 +7,7 @@ export default function CustomCursor() {
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add("(min-width: 767px)", () => {
-      gsap.set(["body", "a", "button","Link"], {
+      gsap.set(["body", "a", "button"], {
         cursor: "none",
       });
       const xSetter = gsap.quickSetter(cursorDot.current, "x", "px");
