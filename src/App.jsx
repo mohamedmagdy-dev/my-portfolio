@@ -12,17 +12,17 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 // Pages
 import HomePage from "./Pages/HomePage";
-import WorkPage from "./Pages/WorkPage";
-import AboutPage from "./Pages/AboutPage";
-import ContactPage from "./Pages/ContactPage";
-import DashboardPage from "./Pages/DashboardPage";
-import LoginPage from "./Pages/LoginPage";
+const WorkPage = lazy(() => import("./Pages/WorkPage"));
+const AboutPage = lazy(() => import("./Pages/AboutPage"));
+const ContactPage = lazy(() => import("./Pages/ContactPage"));
+const DashboardPage = lazy(() => import("./Pages/DashboardPage"));
+const LoginPage = lazy(() => import("./Pages/LoginPage"));
 
 // Store
 import useLoaderStore from "./store/useLoaderStore";
 
 // lib
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense, lazy } from "react";
 import { Route, Routes, useLocation } from "react-router";
 
 export default function App() {
@@ -43,29 +43,31 @@ export default function App() {
       <Header />
 
       <ScrollSmoother locationKey={displayLocation.pathname}>
-        <Routes location={displayLocation}>
-          <Route
-            path="/"
-            element={
-              <>
-                <HeroSection />
-                {!loaderState && <HomePage />}
-              </>
-            }
-          />
-          <Route path="/work" element={<WorkPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes location={displayLocation}>
+            <Route
+              path="/"
+              element={
+                <>
+                  <HeroSection />
+                  {!loaderState && <HomePage />}
+                </>
+              }
+            />
+            <Route path="/work" element={<WorkPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
       </ScrollSmoother>
     </>
   );

@@ -17,7 +17,7 @@ export default function HomePage() {
         <SelectedWork />
         <HorizontalWorkSlider />
         <AboutMe />
-        <VideoRevel />
+        {/* <VideoRevel /> */}
         <TextMarquee />
         <MyJourney />
         <MyToolKit />

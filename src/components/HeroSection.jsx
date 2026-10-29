@@ -158,15 +158,28 @@ export default function HeroSection() {
           <span>{"{Alexandria, Egypt}"}</span>
         </div>
         <h1 className="text-[clamp(3.8rem,15vw,14rem)] text-center leading-[1.2] tracking-wider">
-          <div ref={firstNameRef} className=" md:text-left max-sm:text-nowrap">
+          <div
+            ref={firstNameRef}
+            className=" md:text-left max-sm:text-nowrap"
+            aria-label="Mohamed"
+          >
             Mohamed
           </div>
-          <div ref={secondNameRef} className="md:text-right max-sm:text-nowrap">
+          <div
+            ref={secondNameRef}
+            className="md:text-right max-sm:text-nowrap"
+            aria-label="Magdy"
+          >
             Magdy
           </div>
         </h1>
         <div className="lg:flex justify-between relative items-center w-full">
-          <p className="hero-dec  text-xl font-bold md:w-100 opacity-0">
+          <p
+            className="hero-dec  text-xl font-bold md:w-100 opacity-0"
+            aria-label="   I design & build interactive websites with a strong focus on detail
+            From smooth animations to pixel-perfect interfaces, I turn ideas
+            into digital experiences that feel as good as they look."
+          >
             I design & build interactive websites with a strong focus on detail
             From smooth animations to pixel-perfect interfaces, I turn ideas
             into digital experiences that feel as good as they look.
