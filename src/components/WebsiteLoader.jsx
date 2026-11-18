@@ -21,6 +21,7 @@ export default function WebsiteLoader() {
     const tl = gsap.timeline({
       onComplete: () => {
         updateLoaderState(false);
+        window.sessionStorage.setItem("went_before", "true");
       },
     });
     tl.to(rowCards.current.children, {
@@ -54,6 +55,7 @@ export default function WebsiteLoader() {
       background: "var(--color-charcoal)",
     });
   }, []);
+
   return (
     <div>
       <div

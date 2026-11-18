@@ -31,3 +31,6 @@ notes.txt
 .env
 .env*.local
 .env.example
+
+
+.agents

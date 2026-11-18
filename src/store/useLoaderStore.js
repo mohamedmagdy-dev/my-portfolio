@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
+const isUserWentBefore = window.sessionStorage.getItem("went_before")
+
 const useLoaderStore = create((set) => ({
-  isLoading: true,
-  isMidAnimationTl: false,
+  isLoading: isUserWentBefore ? false : true,
+  isMidAnimationTl: isUserWentBefore ? true : false,
   updateLoaderState: (loaderState) => {
     set(() => {
       return {
